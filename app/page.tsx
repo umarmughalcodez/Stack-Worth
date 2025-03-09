@@ -1,20 +1,11 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import Homepage from "@/components/Homepage";
+import Navbar from "@/components/Navbar";
 import React from "react";
 
 const App = () => {
   return (
     <div>
-      <p>"Find Out Your Developer Worth"</p>
-      <Button
-        onClick={() => {
-          redirect("/dev-type");
-        }}
-      >
-        Let's Check!
-      </Button>
+      <Homepage />
     </div>
   );
 };

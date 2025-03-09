@@ -1,17 +1,14 @@
 "use client";
+import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
-import { setSelectedOptions } from "@/redux/slices/userSlice";
-import { RootState } from "@/redux/store";
+import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 const DeveloperType = () => {
   const [showFullStackMsg, setShowFullStackMsg] = useState(false);
-  const dispatch = useDispatch();
-  const selectedOptions = useSelector(
-    (state: RootState) => state.user.selectedOptions
-  );
+
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -54,7 +51,7 @@ const DeveloperType = () => {
       setShowFullStackMsg(false);
     }
 
-    dispatch(setSelectedOptions([...new Set(updatedOptions)]));
+    setSelectedOptions([...new Set(updatedOptions)]);
   };
 
   const handleRedirect = () => {
@@ -69,45 +66,58 @@ const DeveloperType = () => {
 
   return (
     <div>
-      <p>What Type Of Developer Are You?</p>
-      <br />
-      <label>
-        <input
-          name="Front End Developer"
-          type="checkbox"
-          value="Front End Developer"
-          checked={selectedOptions.includes("Front End Developer")}
-          onChange={handleChange}
-        />
-        Front End Developer
-      </label>
-      <br />
-      <label>
-        <input
-          name="Back End Developer"
-          type="checkbox"
-          value="Back End Developer"
-          checked={selectedOptions.includes("Back End Developer")}
-          onChange={handleChange}
-        />
-        Back End Developer
-      </label>
-      {showFullStackMsg && <p>Looks Like you are a Full Stack Developer!</p>}
-      <label>
-        <input
-          type="checkbox"
-          value="Full Stack Developer"
-          checked={selectedOptions.includes("Full Stack Developer")}
-          onChange={handleChange}
-        />
-        Full Stack Developer
-      </label>
+      <Background />
+      <div className="flex flex-col items-center z-10 h-screen w-screen justify-center relative">
+        <p className="text-2xl font-bold mt-[-10%]">
+          What Type Of Developer Are You?
+        </p>
+        <br />
+        <label>
+          <input
+            name="Front End Developer"
+            type="checkbox"
+            value="Front End Developer"
+            checked={selectedOptions.includes("Front End Developer")}
+            onChange={handleChange}
+          />
+          Front End Developer
+        </label>
+        <label>
+          <input
+            name="Back End Developer"
+            type="checkbox"
+            value="Back End Developer"
+            checked={selectedOptions.includes("Back End Developer")}
+            onChange={handleChange}
+          />
+          Back End Developer
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="Full Stack Developer"
+            checked={selectedOptions.includes("Full Stack Developer")}
+            onChange={handleChange}
+          />
+          Full Stack Developer
+        </label>
 
-      {selectedOptions.length <= 0 ? (
-        <Button disabled={true}>Please Select at least one option</Button>
-      ) : (
-        <Button onClick={handleRedirect}>Proceed</Button>
-      )}
+        {selectedOptions.length <= 0 ? (
+          <Button disabled={true}>Please Select at least one option</Button>
+        ) : (
+          <Button
+            onClick={handleRedirect}
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
+          >
+            Next
+          </Button>
+        )}
+        {showFullStackMsg && (
+          <p>Looks Like you are a Full Stack Developer! 💀</p>
+        )}
+      </div>
     </div>
   );
 };

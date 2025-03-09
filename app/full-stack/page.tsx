@@ -1,4 +1,5 @@
 "use client";
+import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -82,128 +83,137 @@ const FullStack = () => {
 
   return (
     <div>
-      <Toaster />
-      <p>Select You Full Stack Languages</p>
-      <div>
-        <p>Front End Languages</p>
-        <label>
-          <input
-            type="checkbox"
-            value={"HTML"}
-            checked={selectedLanguages.includes("HTML")}
-            onChange={handleChange}
-          />
-          HTML
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"CSS"}
-            checked={selectedLanguages.includes("CSS")}
-            onChange={handleChange}
-          />
-          CSS
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"JS"}
-            checked={selectedLanguages.includes("JS")}
-            onChange={handleChange}
-          />
-          Javascript
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"TS"}
-            checked={selectedLanguages.includes("TS")}
-            onChange={handleChange}
-          />
-          TypeScript
-        </label>
-      </div>
-      <div>
-        <p>Back End Languages</p>
-        <label>
-          <input
-            type="checkbox"
-            value={"Python"}
-            checked={selectedLanguages.includes("Python")}
-            onChange={handleChange}
-          />
-          Python
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Node.js"}
-            checked={selectedLanguages.includes("Node.js")}
-            onChange={handleChange}
-          />
-          Node.js
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"PHP"}
-            checked={selectedLanguages.includes("PHP")}
-            onChange={handleChange}
-          />
-          PHP
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Java"}
-            checked={selectedLanguages.includes("Java")}
-            onChange={handleChange}
-          />
-          Java
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Ruby"}
-            checked={selectedLanguages.includes("Ruby")}
-            onChange={handleChange}
-          />
-          Ruby
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"C#"}
-            checked={selectedLanguages.includes("C#")}
-            onChange={handleChange}
-          />
-          C#
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Go"}
-            checked={selectedLanguages.includes("Go")}
-            onChange={handleChange}
-          />
-          Go
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Rust"}
-            checked={selectedLanguages.includes("Rust")}
-            onChange={handleChange}
-          />
-          Rust
-        </label>
-      </div>
+      <Background />
+      <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
+        <Toaster />
+        <p className="text-2xl font-bold">Select You Full Stack Languages</p>
+        <div className="border bg-green-100 w-screen h-96 flex">
+          <div className="w-[50%] h-full bg-red-600 flex flex-col items-center justify-center">
+            <p>Front End Languages</p>
+            <label>
+              <input
+                type="checkbox"
+                value={"HTML"}
+                checked={selectedLanguages.includes("HTML")}
+                onChange={handleChange}
+              />
+              HTML
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"CSS"}
+                checked={selectedLanguages.includes("CSS")}
+                onChange={handleChange}
+              />
+              CSS
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"JS"}
+                checked={selectedLanguages.includes("JS")}
+                onChange={handleChange}
+              />
+              Javascript
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"TS"}
+                checked={selectedLanguages.includes("TS")}
+                onChange={handleChange}
+              />
+              TypeScript
+            </label>
+          </div>
+          <div className="w-[50%] h-full bg-red-300  flex flex-col items-center justify-center">
+            <p>Back End Languages</p>
+            <label>
+              <input
+                type="checkbox"
+                value={"Python"}
+                checked={selectedLanguages.includes("Python")}
+                onChange={handleChange}
+              />
+              Python
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"Node.js"}
+                checked={selectedLanguages.includes("Node.js")}
+                onChange={handleChange}
+              />
+              Node.js
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"PHP"}
+                checked={selectedLanguages.includes("PHP")}
+                onChange={handleChange}
+              />
+              PHP
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"Java"}
+                checked={selectedLanguages.includes("Java")}
+                onChange={handleChange}
+              />
+              Java
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"Ruby"}
+                checked={selectedLanguages.includes("Ruby")}
+                onChange={handleChange}
+              />
+              Ruby
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"C#"}
+                checked={selectedLanguages.includes("C#")}
+                onChange={handleChange}
+              />
+              C#
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"Go"}
+                checked={selectedLanguages.includes("Go")}
+                onChange={handleChange}
+              />
+              Go
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value={"Rust"}
+                checked={selectedLanguages.includes("Rust")}
+                onChange={handleChange}
+              />
+              Rust
+            </label>
+          </div>
+        </div>
 
-      <Button disabled={selectedLanguages.length <= 1} onClick={handleRedirect}>
-        {selectedLanguages.length <= 1
-          ? "Please select at least two languages"
-          : "Next"}
-      </Button>
+        <Button
+          effect={"shineHover"}
+          disabled={selectedLanguages.length <= 1}
+          onClick={handleRedirect}
+        >
+          {selectedLanguages.length <= 1
+            ? "Please select at least two languages"
+            : "Next"}
+        </Button>
+      </div>
     </div>
   );
 };
