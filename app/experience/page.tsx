@@ -1,5 +1,6 @@
 "use client";
 import Background from "@/components/animations/background";
+import GroupSizeSelector from "@/components/animations/CustomCheckbox";
 import { Button } from "@/components/ui/button";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -50,6 +51,7 @@ const experience = () => {
     <div>
       <Background />
       <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
+        {/* <GroupSizeSelector /> */}
         <p>Select your years of experience in this field</p>
         <label>
           <input

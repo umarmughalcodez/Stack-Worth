@@ -3,6 +3,7 @@
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types/User";
+import { Loader } from "lucide-react";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect, useSearchParams } from "next/navigation";
@@ -162,9 +163,7 @@ const DevWorth = () => {
     <div>
       <Background />
       {loading ? (
-        <div className="flex justify-center items-center h-screen w-screen z-10 backdrop-blur-lg">
-          <span className="loader" />
-        </div>
+        <Loader />
       ) : (
         <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
           {showCard ? (

@@ -1,79 +1,62 @@
 "use client";
 import Background from "@/components/animations/background";
+import GroupSizeSelector from "@/components/animations/CustomCheckbox";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import html from "@/public/icons8-html-5.svg";
+import css from "@/public/icons8-css-logo.svg";
+import js from "@/public/icons8-javascript.svg";
+import ts from "@/public/icons8-typescript.svg";
+
+const options = [
+  { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
+  { value: "css", label: "CSS", icon: css, bg: "bg-blue-200" },
+  { value: "js", label: "JavaScript", icon: js, bg: "bg-yellow-200" },
+  { value: "ts", label: "TypeScript", icon: ts, bg: "bg-blue-200" },
+];
 
 const FrontEnd = () => {
   const [selectedLanguages, setselectedLanguages] = useState<string[]>([]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    let updatedOptions = [...selectedLanguages];
-
-    if (checked) {
-      updatedOptions.push(value);
-    } else {
-      updatedOptions = updatedOptions.filter((option) => option !== value);
-    }
-
-    setselectedLanguages([...new Set(updatedOptions)]);
-  };
-
   const handleRedirect = () => {
     const languages = selectedLanguages.join(", ");
     const dev = location.pathname.substring(1);
-    const url = `/frameworks?languages=${encodeURIComponent(
-      languages
-    )}&dev=${dev}`;
-    redirect(url);
+    if (
+      !selectedLanguages.includes("js") &&
+      !selectedLanguages.includes("ts") &&
+      !selectedLanguages.includes("css")
+    ) {
+      const url = `/experience?languages=${encodeURIComponent(
+        languages
+      )}&frameworks=none&dev=${dev}`;
+      redirect(url);
+    } else {
+      const url = `/frameworks?languages=${encodeURIComponent(
+        languages
+      )}&dev=${dev}`;
+      redirect(url);
+    }
   };
 
   return (
     <div>
       <Background />
       <div className="relative z-10 flex flex-col items-center w-full h-full mt-60 overflow-hidden">
-        <p className="font-bold text-2xl">Select Your Front End Languages</p>
-        <label>
-          <input
-            type="checkbox"
-            value={"HTML"}
-            checked={selectedLanguages.includes("HTML")}
-            onChange={handleChange}
-          />
-          HTML
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"CSS"}
-            checked={selectedLanguages.includes("CSS")}
-            onChange={handleChange}
-          />
-          CSS
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"JS"}
-            checked={selectedLanguages.includes("JS")}
-            onChange={handleChange}
-          />
-          Javascript
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"TS"}
-            checked={selectedLanguages.includes("TS")}
-            onChange={handleChange}
-          />
-          TypeScript
-        </label>
+        <p className="font-bold text-2xl mb-20">
+          Select Your Front End Languages
+        </p>
+        <GroupSizeSelector
+          options={options}
+          selectedOptions={selectedLanguages}
+          onChange={setselectedLanguages}
+        />
+
         <Button
           effect={"shineHover"}
           onClick={handleRedirect}
           disabled={selectedLanguages.length <= 0}
+          className="mt-10"
         >
           {selectedLanguages.length <= 0
             ? "Please select at least 1 language"

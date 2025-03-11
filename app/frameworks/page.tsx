@@ -1,60 +1,120 @@
 "use client";
+import { useRouter } from "next/navigation";
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
-import { getSession } from "next-auth/react";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import react from "@/public/icons8-react-native.svg";
+import nestjs from "@/public/icons8-nestjs.svg";
+import qt from "@/public/icons8-qt (1).svg";
+import reactNative from "@/public/icons8-react-native (1).svg";
+import rubyonrails from "@/public/ruby on rails.png";
+import springboot from "@/public/icons8-spring-boot.svg";
+import tailwind from "@/public/icons8-tailwind-css.svg";
+import unity from "@/public/icons8-unity.svg";
+import unreal from "@/public/icons8-unreal-engine (1).svg";
+import laravel from "@/public/laravel.svg";
+import libuv from "@/public/libuv.svg";
+import quarkus from "@/public/quarkus.svg";
+import rocket from "@/public/rocket (1).svg";
+import sinatra from "@/public/sinatra.svg";
+import nextjs from "@/public/icons8-next.js.svg";
+import svelte1 from "@/public/svelte-icon.svg";
+import vue from "@/public/icons8-vue-js.svg";
+import angular1 from "@/public/icons8-angular (1).svg";
+import jquery from "@/public/icons8-jquery.svg";
+import django from "@/public/django-original.svg";
+import fiber from "@/public/fiber.svg";
+import gin from "@/public/gin.png";
+import net from "@/public/icons8-.net-framework.svg";
+import bootstrap from "@/public/icons8-bootstrap.svg";
+import express from "@/public/icons8-express-js.svg";
+import flask from "@/public/icons8-flask.svg";
+import flutter from "@/public/flutter.svg";
+import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import { ArrowLeftIcon } from "lucide-react";
+import { setSelectedOptions } from "@/redux/slices/userSlice";
+
+const frontEndOptions = [
+  { value: "react.js", label: "React.js", icon: react, bg: "bg-blue-200" },
+  {
+    value: "reactNative",
+    label: "React Native",
+    icon: reactNative,
+    bg: "bg-sky-200",
+  },
+  {
+    value: "flutter",
+    label: "Flutter",
+    icon: flutter,
+    bg: "bg-blue-200",
+  },
+  { value: "nextjs", label: "Nextjs", icon: nextjs, bg: "bg-gray-200" },
+  {
+    value: "bootstrap",
+    label: "Bootstrap",
+    icon: bootstrap,
+    bg: "bg-purple-300",
+  },
+  {
+    value: "tailwindcss",
+    label: "Tailwind CSS",
+    icon: tailwind,
+    bg: "bg-blue-200",
+  },
+
+  { value: "angular", label: "Angular", icon: angular1, bg: "bg-red-200" },
+  { value: "vue", label: "Vue", icon: vue, bg: "bg-green-200" },
+  { value: "svelte", label: "Svelte", icon: svelte1, bg: "bg-orange-200" },
+  { value: "jquery", label: "JQuery", icon: jquery, bg: "bg-gray-200" },
+];
+
+const backEndOptions = [
+  {
+    value: "flask",
+    label: "Flask",
+    icon: flask,
+    bg: "bg-slate-200",
+    size: "65",
+  },
+  { value: "nestjs", label: "Nestjs", icon: nestjs, bg: "bg-pink-200" },
+
+  { value: "express", label: "Express", icon: express, bg: "bg-green-200" },
+  { value: "net", label: ".Net", icon: net, bg: "bg-blue-200" },
+  { value: "gin", label: "Gin", icon: gin, bg: "bg-yellow-200" },
+  { value: "fiber", label: "Fiber", icon: fiber, bg: "bg-blue-200" },
+  { value: "django", label: "Django", icon: django, bg: "bg-green-200" },
+  { value: "sinatra", label: "Sinatra", icon: sinatra, bg: "bg-gray-200" },
+  { value: "rocket", label: "Rocket", icon: rocket, bg: "bg-red-200" },
+  { value: "quarkus", label: "Quarkus", icon: quarkus, bg: "bg-gray-200" },
+  { value: "libuv", label: "Libuv", icon: libuv, bg: "bg-gray-200" },
+  { value: "laravel", label: "Laravel", icon: laravel, bg: "bg-red-200" },
+  { value: "unreal", label: "Unreal", icon: unreal, bg: "bg-slate-200" },
+  { value: "unity", label: "Unity", icon: unity, bg: "bg-slate-200" },
+  {
+    value: "springboot",
+    label: "Springboot",
+    icon: springboot,
+    bg: "bg-green-200",
+  },
+  {
+    value: "rubyonrails",
+    label: "Rubyonrails",
+    icon: rubyonrails,
+    bg: "bg-red-200",
+  },
+  { value: "qt", label: "QT", icon: qt, bg: "bg-slate-200" },
+];
 
 const Frameworks = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const languages = searchParams
     .getAll("languages")
     .flatMap((lang) => lang.split(", "));
   const dev = searchParams.get("dev");
-  let language = languages.join(", ");
 
   const [selectedFrameworks, setselectedFrameworks] = useState<string[]>([]);
-  const [showFrontendFrameworks, setShowFrontendFrameworks] = useState(true);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    let updatedOptions = [...selectedFrameworks];
-
-    if (checked) {
-      updatedOptions.push(value);
-    } else {
-      updatedOptions = updatedOptions.filter((option) => option !== value);
-    }
-
-    setselectedFrameworks([...new Set(updatedOptions)]);
-  };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const session = await getSession();
-      // setUser(DataTransfer.use)
-    };
-  });
-
-  useEffect(() => {
-    if (
-      dev === "front-end" &&
-      !languages.includes("JS") &&
-      !languages.includes("TS")
-    ) {
-      const url = `/experience?languages=${encodeURIComponent(
-        language
-      )}&frameworks=none`;
-      redirect(url);
-    }
-    if (
-      dev === "full-stack" &&
-      !languages.includes("JS") &&
-      !languages.includes("TS")
-    ) {
-      setShowFrontendFrameworks(false);
-    }
-  }, [languages, dev]);
 
   const handleRedirect = () => {
     let language = languages.join(", ");
@@ -73,295 +133,112 @@ const Frameworks = () => {
   return (
     <div>
       <Background />
-      <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
-        <p>Select Frameworks & Libraries</p>
+      <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-24">
+        <p className="text-3xl font-semibold">Select Frameworks & Libraries</p>
 
         {dev === "full-stack" && (
-          <div className="w-full h-80 bg-green-100 flex">
-            <div className="w-[50%] bg-red-200">
-              <p>Select Front End Frameworks</p>
-              <label>
-                <input
-                  type="checkbox"
-                  value="React.js"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("React.js")}
-                />
-                React.js
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Next.js"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Next.js")}
-                />
-                Next.js
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Vue.js"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Vue.js")}
-                />
-                Vue.js
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Angular"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Angular")}
-                />
-                Angular
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="Svelte"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Svelte")}
-                />
-                Svelte
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="JQuery"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("JQuery")}
-                />
-                JQuery
-              </label>
+          <div className="w-[90%] h-auto flex">
+            <div className="w-[50%] flex flex-col items-center">
+              <p className="text-xl font-semibold mt-10 mb-5">
+                Select Front End Frameworks
+              </p>
+              <CustomCheckbox
+                options={frontEndOptions.filter((option) =>
+                  option.value === "bootstrap" || option.value === "tailwindcss"
+                    ? languages.includes("css")
+                    : languages.includes("js") || languages.includes("ts")
+                )}
+                selectedOptions={selectedFrameworks}
+                onChange={setselectedFrameworks}
+              />
             </div>
-            <div className="w-[50%] bg-red-800">
-              <p>Select Back End Frameworks</p>
-              {languages.includes("python") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Django"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Django")}
-                  />
-                  Django
-                </label>
-              )}
-              {languages.includes("Node.js") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Express.js"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Express.js")}
-                  />
-                  Express.js
-                </label>
-              )}
-              {languages.includes("Python") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Flask"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Flask")}
-                  />
-                  Flask
-                </label>
-              )}
 
-              {languages.includes("PHP") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Laravel"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Laravel")}
-                  />
-                  Laravel
-                </label>
-              )}
-              {languages.includes("Java") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Spring Boot"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Spring Boot")}
-                  />
-                  Spring Boot
-                </label>
-              )}
-              {languages.includes("C#") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="ASP.NET"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("ASP.NET")}
-                  />
-                  ASP.NET
-                </label>
-              )}
-              {languages.includes("Ruby") && (
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Ruby on Rails"
-                    onChange={handleChange}
-                    checked={selectedFrameworks.includes("Ruby on Rails")}
-                  />
-                  Ruby on Rails
-                </label>
-              )}
+            <div className="w-[50%] flex flex-col items-center">
+              <p className="text-xl font-semibold mt-10 mb-5">
+                Select Back End Frameworks
+              </p>
+
+              <CustomCheckbox
+                options={backEndOptions.filter(
+                  (option) =>
+                    (option.value === "express" &&
+                      (languages.includes("js") || languages.includes("ts"))) ||
+                    (option.value === "nestjs" &&
+                      (languages.includes("js") || languages.includes("ts"))) ||
+                    (option.value === "django" &&
+                      languages.includes("python")) ||
+                    (option.value === "flask" &&
+                      languages.includes("python")) ||
+                    (option.value === "laravel" && languages.includes("php")) ||
+                    (option.value === "net" && languages.includes("csharp")) ||
+                    (option.value === "gin" && languages.includes("go")) ||
+                    (option.value === "fiber" && languages.includes("go")) ||
+                    (option.value === "sinatra" &&
+                      languages.includes("ruby")) ||
+                    (option.value === "rubyonrails" &&
+                      languages.includes("ruby")) ||
+                    (option.value === "quarkus" &&
+                      languages.includes("java")) ||
+                    (option.value === "springboot" &&
+                      languages.includes("java")) ||
+                    (option.value === "rocket" && languages.includes("rust"))
+                )}
+                selectedOptions={selectedFrameworks}
+                onChange={setselectedFrameworks}
+              />
             </div>
           </div>
         )}
-        {dev === "front-end" && showFrontendFrameworks && (
-          <div>
-            <p className="">Select Front End Frameworks</p>
-            <label>
-              <input
-                type="checkbox"
-                value="React.js"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("React.js")}
-              />
-              React.js
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Next.js"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("Next.js")}
-              />
-              Next.js
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Vue.js"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("Vue.js")}
-              />
-              Vue.js
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Angular"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("Angular")}
-              />
-              Angular
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="Svelte"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("Svelte")}
-              />
-              Svelte
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="JQuery"
-                onChange={handleChange}
-                checked={selectedFrameworks.includes("JQuery")}
-              />
-              JQuery
-            </label>
+        {dev === "front-end" && (
+          <div className="flex flex-col items-center">
+            <p className="text-xl font-semibold mt-10 mb-5">
+              Select Front End Frameworks
+            </p>
+            <CustomCheckbox
+              options={frontEndOptions.filter((option) =>
+                option.value === "bootstrap" || option.value === "tailwindcss"
+                  ? languages.includes("css")
+                  : languages.includes("js") || languages.includes("ts")
+              )}
+              selectedOptions={selectedFrameworks}
+              onChange={setSelectedOptions}
+            />
           </div>
         )}
         {dev === "back-end" && (
           <div>
-            <p>Select Back End Frameworks</p>
-            {languages.includes("python") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Django"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Django")}
-                />
-                Django
-              </label>
-            )}
-            {languages.includes("Node.js") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Express.js"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Express.js")}
-                />
-                Express.js
-              </label>
-            )}
-            {languages.includes("Python") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Flask"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Flask")}
-                />
-                Flask
-              </label>
-            )}
+            <p className="text-xl font-semibold mt-10 mb-5">
+              Select Back End Frameworks
+            </p>
 
-            {languages.includes("PHP") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Laravel"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Laravel")}
-                />
-                Laravel
-              </label>
-            )}
-            {languages.includes("Java") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Spring Boot"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Spring Boot")}
-                />
-                Spring Boot
-              </label>
-            )}
-            {languages.includes("C#") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="ASP.NET"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("ASP.NET")}
-                />
-                ASP.NET
-              </label>
-            )}
-            {languages.includes("Ruby") && (
-              <label>
-                <input
-                  type="checkbox"
-                  value="Ruby on Rails"
-                  onChange={handleChange}
-                  checked={selectedFrameworks.includes("Ruby on Rails")}
-                />
-                Ruby on Rails
-              </label>
-            )}
+            <CustomCheckbox
+              options={backEndOptions.filter(
+                (option) =>
+                  (option.value === "express" &&
+                    (languages.includes("js") || languages.includes("ts"))) ||
+                  (option.value === "nestjs" &&
+                    (languages.includes("js") || languages.includes("ts"))) ||
+                  (option.value === "django" && languages.includes("python")) ||
+                  (option.value === "flask" && languages.includes("python")) ||
+                  (option.value === "laravel" && languages.includes("php")) ||
+                  (option.value === "net" && languages.includes("csharp")) ||
+                  (option.value === "gin" && languages.includes("go")) ||
+                  (option.value === "fiber" && languages.includes("go")) ||
+                  (option.value === "sinatra" && languages.includes("ruby")) ||
+                  (option.value === "rubyonrails" &&
+                    languages.includes("ruby")) ||
+                  (option.value === "quarkus" && languages.includes("java")) ||
+                  (option.value === "springboot" &&
+                    languages.includes("java")) ||
+                  (option.value === "rocket" && languages.includes("rust"))
+              )}
+              selectedOptions={selectedFrameworks}
+              onChange={setselectedFrameworks}
+            />
           </div>
         )}
 
-        <Button onClick={handleRedirect} effect={"gooeyLeft"}>
+        <Button onClick={handleRedirect} effect={"gooeyLeft"} className="mt-10">
           Next
         </Button>
       </div>

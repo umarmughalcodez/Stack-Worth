@@ -32,8 +32,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    // <div className="bg-white bg-opacity-50 backdrop-blur-md h-20 w-screen flex flex-col items-center justify-center z-30">
-    <div className=" h-20 w-screen flex flex-col items-center justify-center z-[100] relative">
+    <div className=" h-20 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
       <Image
         src={logo}
         alt="Logo"
@@ -48,7 +47,7 @@ const Navbar = () => {
           effect="expandIcon"
           icon={FaGithub}
           iconPlacement="left"
-          className="absolute top-5 right-5 text-sm z-10"
+          className="absolute top-5 right-10 text-sm z-10"
           size={"sm"}
           onClick={disconnectGithub}
         >
@@ -59,7 +58,7 @@ const Navbar = () => {
           effect="shineHover"
           icon={FaGithub}
           iconPlacement="left"
-          className="absolute top-5 right-5 text-sm z-10 bg-none"
+          className="absolute top-5 right-10 text-sm z-10 bg-none"
           // size={"sm"}
           onClick={connectGithub}
         >

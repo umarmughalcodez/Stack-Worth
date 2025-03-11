@@ -4,34 +4,72 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import html from "@/public/icons8-html-5.svg";
+import css from "@/public/icons8-css-logo.svg";
+import js from "@/public/icons8-javascript.svg";
+import ts from "@/public/icons8-typescript.svg";
+import python from "@/public/icons8-python.svg";
+import c from "@/public/c-original.svg";
+import cplus from "@/public/c++.svg";
+import csharp from "@/public/csharp.svg";
+import nodejs from "@/public/icons8-nodejs.svg";
+import php from "@/public/php-plain.svg";
+import java from "@/public/icons8-java-logo.svg";
+import ruby from "@/public/icons8-ruby-programming-language.svg";
+import go from "@/public/icons8-go-logo.svg";
+import rust from "@/public/rust.svg";
+import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import Loader from "@/components/Loader";
+
+const frontEndOptions = [
+  { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
+  { value: "css", label: "CSS", icon: css, bg: "bg-blue-200" },
+  { value: "js", label: "JavaScript", icon: js, bg: "bg-yellow-200" },
+  { value: "ts", label: "TypeScript", icon: ts, bg: "bg-blue-200" },
+];
+
+const backEndOptions = [
+  { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
+  { value: "c", label: "C", icon: c, bg: "bg-blue-200" },
+  { value: "c++", label: "C++", icon: cplus, bg: "bg-blue-300" },
+  { value: "c#", label: "C#", icon: csharp, bg: "bg-purple-300" },
+  {
+    value: "nodejs",
+    label: "Nodejs",
+    icon: nodejs,
+    bg: "bg-green-300",
+    size: "65",
+  },
+  { value: "php", label: "PHP", icon: php, bg: "bg-purple-300" },
+  { value: "java", label: "Java", icon: java, bg: "bg-blue-200", size: "65" },
+  { value: "ruby", label: "Ruby", icon: ruby, bg: "bg-red-200" },
+  { value: "go", label: "Go", icon: go, bg: "bg-blue-300" },
+  { value: "rust", label: "Rust", icon: rust, bg: "bg-red-200" },
+];
 
 const FullStack = () => {
   const [selectedLanguages, setselectedLanguages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    let updatedOptions = [...selectedLanguages];
-
-    if (checked) {
-      updatedOptions.push(value);
-    } else {
-      updatedOptions = updatedOptions.filter((option) => option !== value);
-    }
-
-    setselectedLanguages([...new Set(updatedOptions)]);
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   const handleRedirect = () => {
-    const frontEndLanguages = ["HTML", "CSS", "JS", "TS"];
+    const frontEndLanguages = ["html", "css", "js", "ts"];
     const backEndLanguages = [
-      "Python",
-      "Node.js",
-      "PHP",
-      "Java",
-      "Ruby",
-      "Rust",
-      "Go",
-      "C#",
+      "python",
+      "nodejs",
+      "php",
+      "java",
+      "ruby",
+      "rust",
+      "go",
+      "c#",
+      "c++",
+      "c",
     ];
 
     const hasFrontEnd = selectedLanguages.some((lang) =>
@@ -44,6 +82,8 @@ const FullStack = () => {
     if (!hasFrontEnd && !hasBackEnd) {
       toast.error("Please select at least one Front End & Back End Language!", {
         duration: 1500,
+        position: "top-left",
+
         style: {
           backgroundColor: "#333",
           color: "white",
@@ -55,6 +95,8 @@ const FullStack = () => {
     if (!hasFrontEnd) {
       toast.error("Please select at least one Front End Language!", {
         duration: 1500,
+        position: "top-left",
+
         style: {
           backgroundColor: "#333",
           color: "white",
@@ -65,6 +107,7 @@ const FullStack = () => {
     if (!hasBackEnd) {
       toast.error("Please select at least one Back End Language!", {
         duration: 1500,
+        position: "top-left",
         style: {
           backgroundColor: "#333",
           color: "white",
@@ -84,136 +127,42 @@ const FullStack = () => {
   return (
     <div>
       <Background />
-      <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
-        <Toaster />
-        <p className="text-2xl font-bold">Select You Full Stack Languages</p>
-        <div className="border bg-green-100 w-screen h-96 flex">
-          <div className="w-[50%] h-full bg-red-600 flex flex-col items-center justify-center">
-            <p>Front End Languages</p>
-            <label>
-              <input
-                type="checkbox"
-                value={"HTML"}
-                checked={selectedLanguages.includes("HTML")}
-                onChange={handleChange}
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="h-full w-full flex flex-col items-center z-10 relative mt-24">
+          <Toaster />
+          <div className=" w-[95%] h-auto flex">
+            <div className="w-[50%] h-full  flex flex-col items-center justify-center">
+              <p className="mb-5 text-xl">Front End Languages</p>
+              <CustomCheckbox
+                selectedOptions={selectedLanguages}
+                onChange={setselectedLanguages}
+                options={frontEndOptions}
               />
-              HTML
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"CSS"}
-                checked={selectedLanguages.includes("CSS")}
-                onChange={handleChange}
+            </div>
+            <div className="w-[50%] h-full  flex flex-col items-center justify-center">
+              <p className="mb-5 text-xl">Back End Languages</p>
+              <CustomCheckbox
+                selectedOptions={selectedLanguages}
+                onChange={setselectedLanguages}
+                options={backEndOptions}
               />
-              CSS
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"JS"}
-                checked={selectedLanguages.includes("JS")}
-                onChange={handleChange}
-              />
-              Javascript
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"TS"}
-                checked={selectedLanguages.includes("TS")}
-                onChange={handleChange}
-              />
-              TypeScript
-            </label>
+            </div>
           </div>
-          <div className="w-[50%] h-full bg-red-300  flex flex-col items-center justify-center">
-            <p>Back End Languages</p>
-            <label>
-              <input
-                type="checkbox"
-                value={"Python"}
-                checked={selectedLanguages.includes("Python")}
-                onChange={handleChange}
-              />
-              Python
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"Node.js"}
-                checked={selectedLanguages.includes("Node.js")}
-                onChange={handleChange}
-              />
-              Node.js
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"PHP"}
-                checked={selectedLanguages.includes("PHP")}
-                onChange={handleChange}
-              />
-              PHP
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"Java"}
-                checked={selectedLanguages.includes("Java")}
-                onChange={handleChange}
-              />
-              Java
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"Ruby"}
-                checked={selectedLanguages.includes("Ruby")}
-                onChange={handleChange}
-              />
-              Ruby
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"C#"}
-                checked={selectedLanguages.includes("C#")}
-                onChange={handleChange}
-              />
-              C#
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"Go"}
-                checked={selectedLanguages.includes("Go")}
-                onChange={handleChange}
-              />
-              Go
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value={"Rust"}
-                checked={selectedLanguages.includes("Rust")}
-                onChange={handleChange}
-              />
-              Rust
-            </label>
-          </div>
-        </div>
 
-        <Button
-          effect={"shineHover"}
-          disabled={selectedLanguages.length <= 1}
-          onClick={handleRedirect}
-        >
-          {selectedLanguages.length <= 1
-            ? "Please select at least two languages"
-            : "Next"}
-        </Button>
-      </div>
+          <Button
+            effect={"shineHover"}
+            disabled={selectedLanguages.length <= 1}
+            onClick={handleRedirect}
+            className="mt-5"
+          >
+            {selectedLanguages.length <= 1
+              ? "Please select at least two languages"
+              : "Next"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,23 +2,42 @@
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import python from "@/public/icons8-python.svg";
+import c from "@/public/c-original.svg";
+import cplus from "@/public/c++.svg";
+import csharp from "@/public/csharp.svg";
+import nodejs from "@/public/icons8-nodejs.svg";
+import php from "@/public/php-plain.svg";
+import java from "@/public/icons8-java-logo.svg";
+import ruby from "@/public/icons8-ruby-programming-language.svg";
+import go1 from "@/public/icons8-go-logo.svg";
+import rust from "@/public/rust.svg";
+import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import Loader from "@/components/Loader";
+
+const options = [
+  { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
+  { value: "c", label: "C", icon: c, bg: "bg-blue-200" },
+  { value: "c++", label: "C++", icon: cplus, bg: "bg-blue-300" },
+  { value: "c#", label: "C#", icon: csharp, bg: "bg-purple-300" },
+  {
+    value: "nodejs",
+    label: "Nodejs",
+    icon: nodejs,
+    bg: "bg-green-300",
+    size: "65",
+  },
+  { value: "php", label: "PHP", icon: php, bg: "bg-purple-300" },
+  { value: "java", label: "Java", icon: java, bg: "bg-blue-200", size: "65" },
+  { value: "ruby", label: "Ruby", icon: ruby, bg: "bg-red-200" },
+  { value: "go", label: "Go", icon: go1, bg: "bg-blue-300" },
+  { value: "rust", label: "Rust", icon: rust, bg: "bg-red-200" },
+];
 
 const BackEnd = () => {
   const [selectedLanguages, setselectedLanguages] = useState<string[]>([]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    let updatedOptions = [...selectedLanguages];
-
-    if (checked) {
-      updatedOptions.push(value);
-    } else {
-      updatedOptions = updatedOptions.filter((option) => option !== value);
-    }
-
-    setselectedLanguages([...new Set(updatedOptions)]);
-  };
+  const [loading, setLoading] = useState(true);
 
   const handleRedirect = () => {
     const languages = selectedLanguages.join(", ");
@@ -29,93 +48,39 @@ const BackEnd = () => {
     redirect(url);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
   return (
-    <div>
+    <div className="flex items-center justify-center ">
       <Background />
-      <div className="w-full h-full z-10 relative grid place-items-center mt-60">
-        <p className="font-bold text-2xl">Select Your Back End Languages</p>
-        <label>
-          <input
-            type="checkbox"
-            value={"Python"}
-            checked={selectedLanguages.includes("Python")}
-            onChange={handleChange}
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="w-[95%] h-full z-10 relative grid place-items-center mt-40">
+          <p className="font-bold text-2xl mb-10">
+            Select Your Back End Languages
+          </p>
+          <CustomCheckbox
+            onChange={setselectedLanguages}
+            selectedOptions={selectedLanguages}
+            options={options}
           />
-          Python
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Node.js"}
-            checked={selectedLanguages.includes("Node.js")}
-            onChange={handleChange}
-          />
-          Node.js
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"PHP"}
-            checked={selectedLanguages.includes("PHP")}
-            onChange={handleChange}
-          />
-          PHP
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Java"}
-            checked={selectedLanguages.includes("Java")}
-            onChange={handleChange}
-          />
-          Java
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Ruby"}
-            checked={selectedLanguages.includes("Ruby")}
-            onChange={handleChange}
-          />
-          Ruby
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"C#"}
-            checked={selectedLanguages.includes("C#")}
-            onChange={handleChange}
-          />
-          C#
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Go"}
-            checked={selectedLanguages.includes("Go")}
-            onChange={handleChange}
-          />
-          Go
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value={"Rust"}
-            checked={selectedLanguages.includes("Rust")}
-            onChange={handleChange}
-          />
-          Rust
-        </label>
-        <Button
-          effect={"shineHover"}
-          onClick={handleRedirect}
-          disabled={selectedLanguages.length <= 0}
-        >
-          {selectedLanguages.length <= 0
-            ? "Please select at least 1 language"
-            : "Next"}
-        </Button>
-      </div>
+          <Button
+            className="mt-10"
+            effect={"shineHover"}
+            onClick={handleRedirect}
+            disabled={selectedLanguages.length <= 0}
+          >
+            {selectedLanguages.length <= 0
+              ? "Please select at least 1 language"
+              : "Next"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
