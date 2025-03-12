@@ -102,9 +102,7 @@ const DeveloperType = () => {
               key={option.value}
               className={`flex flex-col items-center justify-center gap-1 h-40 border rounded-lg cursor-pointer transition-all delay-150 w-44 border-none ${
                 selectedOptions.includes(option.value)
-                  ? `${
-                      option.bg as string
-                    } backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-md`
+                  ? `${option.bg as string} shadow-[#444] shadow-lg`
                   : "backdrop-blur-md"
               }`}
             >

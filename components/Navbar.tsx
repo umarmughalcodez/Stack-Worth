@@ -32,13 +32,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className=" h-20 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
+    <div className=" h-24 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
       <Image
         src={logo}
         alt="Logo"
-        width={160}
-        height={160}
-        className="cursor-pointer mt-5"
+        width={130}
+        height={130}
+        className="cursor-pointer"
         onClick={() => redirect("/")}
       />
 

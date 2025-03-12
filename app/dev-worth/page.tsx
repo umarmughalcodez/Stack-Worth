@@ -3,28 +3,261 @@
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types/User";
-import { Loader } from "lucide-react";
+import { ArrowRightIcon, Loader } from "lucide-react";
 import { getSession } from "next-auth/react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import { MdEdit } from "react-icons/md";
+import html from "@/public/icons8-html-5.svg";
+import css from "@/public/icons8-css-logo.svg";
+import js from "@/public/icons8-javascript.svg";
+import ts from "@/public/icons8-typescript.svg";
+import python from "@/public/icons8-python.svg";
+import c from "@/public/c-original.svg";
+import cplus from "@/public/c++.svg";
+import csharp from "@/public/csharp.svg";
+import nodejs from "@/public/icons8-nodejs.svg";
+import php from "@/public/php-plain.svg";
+import java from "@/public/icons8-java-logo.svg";
+import ruby from "@/public/icons8-ruby-programming-language.svg";
+import go from "@/public/icons8-go-logo.svg";
+import rust from "@/public/rust.svg";
+import mysql1 from "@/public/mysql-original-wordmark.svg";
+import postgres from "@/public/postgresql-plain-wordmark.svg";
+import sqlite from "@/public/sqlite.svg";
+import mongodb from "@/public/mongodb-original-wordmark.svg";
+import sqlServer from "@/public/icons8-microsoft-sql-server.svg";
+import oracle from "@/public/oracle-original.svg";
+import redis from "@/public/redis-original-wordmark.svg";
+import mariadb from "@/public/mariadb (1).svg";
+import firebase from "@/public/file-type-firebase.svg";
+import react from "@/public/icons8-react-native.svg";
+import nestjs from "@/public/icons8-nestjs.svg";
+import qt from "@/public/icons8-qt (1).svg";
+import reactNative from "@/public/icons8-react-native (1).svg";
+import rubyonrails from "@/public/ruby on rails.png";
+import springboot from "@/public/icons8-spring-boot.svg";
+import tailwind from "@/public/icons8-tailwind-css.svg";
+import unity from "@/public/icons8-unity.svg";
+import unreal from "@/public/icons8-unreal-engine (1).svg";
+import laravel from "@/public/laravel.svg";
+import libuv from "@/public/libuv.svg";
+import quarkus from "@/public/quarkus.svg";
+import rocket from "@/public/rocket (1).svg";
+import sinatra from "@/public/sinatra.svg";
+import nextjs from "@/public/icons8-next.js.svg";
+import svelte1 from "@/public/svelte-icon.svg";
+import vue from "@/public/icons8-vue-js.svg";
+import angular1 from "@/public/icons8-angular (1).svg";
+import jquery from "@/public/icons8-jquery.svg";
+import django from "@/public/django-original.svg";
+import fiber from "@/public/fiber.svg";
+import gin from "@/public/gin.png";
+import net from "@/public/icons8-.net-framework.svg";
+import bootstrap from "@/public/icons8-bootstrap.svg";
+import express from "@/public/icons8-express-js.svg";
+import flask from "@/public/icons8-flask.svg";
+import flutter from "@/public/flutter.svg";
+import aws from "@/public/aws.svg";
+import editStatic from "@/public/static_edit.svg";
+import editGif from "@/public/editgif.gif";
+import Card from "@/components/Card";
+
+interface OptionProps {
+  value: string;
+  label: string;
+  icon?: StaticImageData;
+  bg: string;
+  size?: string;
+}
+
+const options = [];
 
 const DevWorth = () => {
   const [showCard, setShowCard] = useState(false);
   const [worth, setWorth] = useState<number>(0);
   const searchParams = useSearchParams();
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [frameworks, setFrameworks] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<OptionProps[]>([]);
+  const [frameworks, setFrameworks] = useState<OptionProps[]>([]);
+  const [databases, setDatabases] = useState<OptionProps[]>([]);
   const [dev, setDev] = useState<string>("unknown");
   const [exp, setExp] = useState<string>("0 - 1");
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const languageOptions: OptionProps[] = [
+    { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
+    { value: "css", label: "CSS", icon: css, bg: "bg-blue-200" },
+    { value: "js", label: "JavaScript", icon: js, bg: "bg-yellow-200" },
+    { value: "ts", label: "TypeScript", icon: ts, bg: "bg-blue-200" },
+    { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
+    { value: "c", label: "C", icon: c, bg: "bg-blue-200" },
+    { value: "c++", label: "C++", icon: cplus, bg: "bg-blue-300" },
+    { value: "c#", label: "C#", icon: csharp, bg: "bg-purple-300" },
+    {
+      value: "nodejs",
+      label: "Nodejs",
+      icon: nodejs,
+      bg: "bg-green-300",
+      size: "65",
+    },
+    { value: "php", label: "PHP", icon: php, bg: "bg-purple-300" },
+    { value: "java", label: "Java", icon: java, bg: "bg-blue-200", size: "65" },
+    { value: "ruby", label: "Ruby", icon: ruby, bg: "bg-red-200" },
+    { value: "go", label: "Go", icon: go, bg: "bg-blue-300" },
+    { value: "rust", label: "Rust", icon: rust, bg: "bg-red-200" },
+  ];
+
+  const frameworkOptions: OptionProps[] = [
+    { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
+    {
+      value: "reactNative",
+      label: "React Native",
+      icon: reactNative,
+      bg: "bg-sky-200",
+    },
+    {
+      value: "flutter",
+      label: "Flutter",
+      icon: flutter,
+      bg: "bg-blue-200",
+    },
+    { value: "nextjs", label: "Next", icon: nextjs, bg: "bg-gray-200" },
+    {
+      value: "bootstrap",
+      label: "Bootstrap",
+      icon: bootstrap,
+      bg: "bg-purple-300",
+    },
+    {
+      value: "tailwindcss",
+      label: "Tailwind CSS",
+      icon: tailwind,
+      bg: "bg-blue-200",
+    },
+
+    { value: "angular", label: "Angular", icon: angular1, bg: "bg-red-200" },
+    { value: "vue", label: "Vue", icon: vue, bg: "bg-green-200" },
+    { value: "svelte", label: "Svelte", icon: svelte1, bg: "bg-orange-200" },
+    { value: "jquery", label: "JQuery", icon: jquery, bg: "bg-gray-200" },
+    {
+      value: "flask",
+      label: "Flask",
+      icon: flask,
+      bg: "bg-slate-200",
+      size: "65",
+    },
+    { value: "nestjs", label: "Nest", icon: nestjs, bg: "bg-pink-200" },
+
+    { value: "express", label: "Express", icon: express, bg: "bg-green-200" },
+    { value: "net", label: ".Net", icon: net, bg: "bg-blue-200" },
+    { value: "gin", label: "Gin", icon: gin, bg: "bg-yellow-200" },
+    { value: "fiber", label: "Fiber", icon: fiber, bg: "bg-blue-200" },
+    { value: "django", label: "Django", icon: django, bg: "bg-green-200" },
+    { value: "sinatra", label: "Sinatra", icon: sinatra, bg: "bg-gray-200" },
+    { value: "rocket", label: "Rocket", icon: rocket, bg: "bg-red-200" },
+    { value: "quarkus", label: "Quarkus", icon: quarkus, bg: "bg-gray-200" },
+    { value: "libuv", label: "Libuv", icon: libuv, bg: "bg-gray-200" },
+    { value: "laravel", label: "Laravel", icon: laravel, bg: "bg-red-200" },
+    { value: "unreal", label: "Unreal", icon: unreal, bg: "bg-slate-200" },
+    { value: "unity", label: "Unity", icon: unity, bg: "bg-slate-200" },
+    {
+      value: "springboot",
+      label: "Springboot",
+      icon: springboot,
+      bg: "bg-green-200",
+    },
+    {
+      value: "rubyonrails",
+      label: "Rubyonrails",
+      icon: rubyonrails,
+      bg: "bg-red-200",
+    },
+    { value: "qt", label: "QT", icon: qt, bg: "bg-slate-200" },
+  ];
+
+  const databaseOptions: OptionProps[] = [
+    {
+      value: "mysql",
+      label: "MySQL",
+      icon: mysql1,
+      bg: "bg-orange-200",
+      size: "60",
+    },
+    {
+      value: "postgresql",
+      label: "PostgreSQL",
+      icon: postgres,
+      bg: "bg-blue-200",
+    },
+    {
+      value: "sqlite",
+      label: "SQLite",
+      icon: sqlite,
+      bg: "bg-blue-200",
+      size: "65",
+    },
+    { value: "mongodb", label: "MongoDB", icon: mongodb, bg: "bg-green-200" },
+    {
+      value: "microsoftsql",
+      label: "Microsoft SQL Server",
+      icon: sqlServer,
+      bg: "bg-slate-200",
+    },
+    {
+      value: "aws",
+      label: "AWS (Amazon Web Services)",
+      icon: aws,
+      bg: "bg-orange-200",
+    },
+    {
+      value: "oracle",
+      label: "Oracle",
+      icon: oracle,
+      bg: "bg-orange-200",
+      size: "60",
+    },
+    { value: "redis", label: "Redis", icon: redis, bg: "bg-red-200" },
+    {
+      value: "mariadb",
+      label: "MariaDB",
+      icon: mariadb,
+      bg: "bg-amber-200",
+      size: "85",
+    },
+    {
+      value: "firebase",
+      label: "Firebase Realtime Database",
+      icon: firebase,
+      bg: "bg-yellow-200",
+    },
+  ];
 
   useEffect(() => {
-    setLanguages(searchParams.getAll("l").flatMap((lang) => lang.split(", ")));
+    const selectedLanguages = searchParams
+      .getAll("l")
+      .flatMap((lang) => lang.split(", "));
+    const selectedFrameworks = searchParams
+      .getAll("f")
+      .flatMap((framework) => framework.split(", "));
+    const selectedDatabases = searchParams
+      .getAll("d")
+      .flatMap((database) => database.split(", "));
+
+    setLanguages(
+      languageOptions.filter((option) =>
+        selectedLanguages.includes(option.value)
+      )
+    );
     setFrameworks(
-      searchParams.getAll("f").flatMap((framework) => framework.split(", "))
+      frameworkOptions.filter((option) =>
+        selectedFrameworks.includes(option.value)
+      )
+    );
+    setDatabases(
+      databaseOptions.filter((option) =>
+        selectedDatabases.includes(option.value)
+      )
     );
     setDev(searchParams.get("dev") || "unknown");
     setExp(searchParams.get("exp") || "0 - 1");
@@ -37,35 +270,62 @@ const DevWorth = () => {
 
       // Average salaries for programming languages (in USD)
       const languageSalaries: Record<string, number> = {
-        HTML: 2000,
-        CSS: 10000,
-        Python: 124000,
-        JS: 120000,
-        Java: 120000,
-        C: 125000,
-        Ruby: 130000,
-        PHP: 71000,
-        "C#": 112000,
-        Go: 115000,
-        Rust: 112000,
-        TS: 125000,
+        html: 12000,
+        css: 25000,
+        python: 124000,
+        js: 120000,
+        java: 120000,
+        c: 125000,
+        ruby: 130000,
+        php: 71000,
+        "c#": 112000,
+        "c++": 112000,
+        go: 115000,
+        rust: 112000,
+        ts: 125000,
+        nodejs: 130000,
       };
 
       // Average salaries for frameworks (in USD)
       const frameworkSalaries: Record<string, number> = {
-        "React.js": 120000,
-        "Angular.js": 114000,
-        "Vue.js": 110000,
-        Django: 120000,
-        Flask: 115000,
-        "Spring Boot": 118000,
-        "Ruby on Rails": 130000,
-        Laravel: 105000,
-        "ASP.NET": 112000,
-        "Express.js": 115000,
-        "Next.js": 125000,
-        Svelte: 110000,
+        reactjs: 120000,
+        angular: 114000,
+        vue: 110000,
+        django: 120000,
+        flask: 115000,
+        springboot: 118000,
+        rubyonrails: 130000,
+        laravel: 105000,
+        net: 112000,
+        express: 115000,
+        nextjs: 125000,
+        svelte: 110000,
+        qt: 100000,
+        unity: 130000,
+        unreal: 112000,
+        libuv: 110000,
+        quarkus: 90000,
+        rocket: 100000,
+        sinatra: 105000,
+        gin: 120000,
+        fiber: 125000,
+        bootstrap: 100000,
+        tailwindcss: 110000,
+        reactNative: 150000,
         none: 1000,
+      };
+
+      const databaseSalaries: Record<string, number> = {
+        mysql: 12000,
+        postgresql: 125000,
+        sqlite: 100000,
+        mongodb: 120000,
+        microsoftsql: 90000,
+        oracle: 100000,
+        redis: 100000,
+        mariadb: 85000,
+        firebase: 130000,
+        aws: 145000,
       };
 
       // Experience multipliers
@@ -86,15 +346,21 @@ const DevWorth = () => {
 
       // Calculate total worth based on languages
       languages.forEach((lang) => {
-        if (languageSalaries[lang]) {
-          totalWorth += languageSalaries[lang];
+        if (languageSalaries[lang.value]) {
+          totalWorth += languageSalaries[lang.value];
         }
       });
 
       // Calculate total worth based on frameworks
       frameworks.forEach((framework) => {
-        if (frameworkSalaries[framework]) {
-          totalWorth += frameworkSalaries[framework];
+        if (frameworkSalaries[framework.value]) {
+          totalWorth += frameworkSalaries[framework.value];
+        }
+      });
+
+      databases.forEach((database) => {
+        if (databaseSalaries[database.value]) {
+          totalWorth += databaseSalaries[database.value];
         }
       });
 
@@ -118,20 +384,42 @@ const DevWorth = () => {
     }, 3000);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
   const handleEditFrameworks = () => {
-    const language = languages.join(", ");
+    const language = languages.map((lang) => lang.value).join(", ");
     const url = `/frameworks?languages=${encodeURIComponent(
       language
     )}&dev=${dev}`;
     redirect(url);
   };
 
-  const handleEditExperience = () => {
-    const language = languages.join(", ");
-    const framework = frameworks.join(", ");
+  const handleEditLanguages = () => {
+    redirect(`/languages?dev=${dev}`);
+  };
+
+  const handleEditDatabases = () => {
+    const language = languages.map((lang) => lang.value).join(", ");
+    const framework = frameworks.map((framework) => framework.value).join(", ");
     const url = `/experience?languages=${encodeURIComponent(
       language
     )}&frameworks=${encodeURIComponent(framework)}&dev=${dev}`;
+    redirect(url);
+  };
+
+  const handleEditExperience = () => {
+    const language = languages.map((lang) => lang.value).join(", ");
+    const framework = frameworks.map((framework) => framework.value).join(", ");
+    const database = databases.map((database) => database.value).join(", ");
+    const url = `/experience?languages=${encodeURIComponent(
+      language
+    )}&frameworks=${encodeURIComponent(
+      framework
+    )}&database=${database}&dev=${dev}`;
     redirect(url);
   };
 
@@ -145,104 +433,224 @@ const DevWorth = () => {
   }, []);
 
   let worthMessage = "";
-  // useEffect(() => {
+  let tip = "";
   if (worth < 30000) {
     worthMessage = "Entry Level 💼";
+    tip = "Focus on building a strong foundation in coding";
   } else if (worth < 60000) {
     worthMessage = "Junior Developer 👨‍💻";
+    tip = "Start contributing to open-source projects";
   } else if (worth < 130000) {
     worthMessage = "Mid-Level Developer 💻";
+    tip = "Consider getting certified in a specialized area";
   } else if (worth < 180000) {
     worthMessage = "Senior Developer 🧑‍💼";
+    tip = "Mentor junior developers and share your knowledge";
   } else {
     worthMessage = "Expert Developer 🚀";
+    tip = "Stay updated with the latest industry trends and technologies";
   }
-  // }, [worth]);
 
   return (
-    <div>
+    <div className="h-full w-full flex items-center justify-center text-[#222]">
       <Background />
       {loading ? (
         <Loader />
       ) : (
-        <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
+        <div className="h-full w-[90%] z-10 flex flex-col items-center justify-center relative mt-20 text-center">
           {showCard ? (
-            <div
-              className="w-[40%] h-[50%] rounded-xl z-20"
-              style={{
-                backgroundImage:
-                  "url('https://res.cloudinary.com/xcorpion/image/upload/v1740344288/lukxsq8cvmn4wdbtuveg.gif')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                opacity: 4,
-              }}
-            >
-              {user?.image && (
-                <Image
-                  src={user?.image as string}
-                  alt="User's Image"
-                  width={70}
-                  height={70}
-                  className="rounded-full"
-                />
-              )}
-              {user?.name}
-              <p>You are a {worthMessage}</p>
-              <p>
-                Your Estimated Developer Worth: ${worth.toLocaleString()} 💸
-              </p>
+            <div>
+              <Card worthMsg={worthMessage} worth={worth} tip={tip} />
             </div>
           ) : (
             <>
-              <p>Preview of what you Selected</p>
-              <div>
-                <strong>Development Type:</strong> <span>{dev}</span>{" "}
-                <span>
-                  <MdEdit
-                    onClick={() => redirect("/dev-type")}
-                    className="hover:bg-slate-200 bg-opacity-15 rounded-full text-xl cursor-pointer transition-all delay-150 scale-110 w-4 h-4"
-                  />
+              <p className="text-3xl font-semibold mb-5">
+                Preview of what you Selected
+              </p>
+              <div className="flex flex-col items-center justify-center">
+                <p className="text-2xl font-bold mb-5">Development Type</p>
+                <span className="text-xl flex items-center justify-center">
+                  {dev === "front-end" && "Front End Developer"}
+                  {dev === "back-end" && "Back End Developer"}
+                  {dev === "full-stack" && "Full Stack Developer"}
+                  <button className="edit-button ml-2">
+                    <Image
+                      src={editStatic}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="svg"
+                    />
+                    <Image
+                      src={editGif}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="gif"
+                      onClick={() => redirect("/dev-type")}
+                    />
+                  </button>
                 </span>
               </div>
-              <div>
-                <strong>Languages:</strong>
-                <ul>
-                  {languages.map((lang) => (
-                    <li key={lang}>{lang}</li>
-                  ))}
-                </ul>
-                <span>
-                  <MdEdit
-                    onClick={() => redirect(`/${dev}`)}
-                    className="hover:bg-slate-200 bg-opacity-15 rounded-full text-xl cursor-pointer transition-all delay-150 scale-110 w-4 h-4"
-                  />
-                </span>
-              </div>
-              <div>
-                <strong>Frameworks:</strong>
-                <ul>
-                  {frameworks.map((framework) => (
-                    <li key={framework}>{framework}</li>
-                  ))}
-                </ul>
-                <span>
-                  <MdEdit
-                    onClick={handleEditFrameworks}
-                    className="hover:bg-slate-200 bg-opacity-15 rounded-full text-xl cursor-pointer transition-all delay-150 scale-110 w-4 h-4"
-                  />
-                </span>
-              </div>
-              <div>
-                <strong>Experience:</strong> <span>{exp} years</span>
-                <span>
-                  <MdEdit
-                    onClick={handleEditExperience}
-                    className="hover:bg-slate-200 bg-opacity-15 rounded-full text-xl cursor-pointer transition-all delay-150 scale-110 w-4 h-4"
-                  />
+              <div className="mt-5 text-2xl mb-3">
+                <p className="font-bold mb-5">Experience</p>
+                <span className="text-xl flex items-center justify-center">
+                  {exp} years
+                  <button className="edit-button ml-2">
+                    <Image
+                      src={editStatic}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="svg"
+                    />
+                    <Image
+                      src={editGif}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="gif"
+                      onClick={handleEditExperience}
+                    />
+                  </button>
                 </span>
               </div>
 
-              <Button onClick={calculateWorth}>
+              <div className="text-2xl mt-8 mb-10">
+                <span className="text-2xl flex items-center justify-center font-bold">
+                  Languages
+                  <button className="edit-button ml-2">
+                    <Image
+                      src={editStatic}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="svg"
+                    />
+                    <Image
+                      src={editGif}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="gif"
+                      onClick={handleEditLanguages}
+                    />
+                  </button>
+                </span>
+
+                <div className="gap-10 flex flex-wrap items-center justify-center mt-10 mb-10">
+                  {languages.map((lang) => (
+                    <label
+                      key={lang.value}
+                      className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg transition-all delay-150 w-44 border-none ${lang.bg} backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-lg`}
+                    >
+                      {lang.icon && (
+                        <Image
+                          src={lang.icon}
+                          alt={lang.label}
+                          width={lang.size ? parseInt(lang.size) : 50}
+                          height={50}
+                        />
+                      )}
+                      <span className="text-sm mt-3 ">{lang.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="text-2xl">
+                <span className="flex justify-center items-center font-bold">
+                  Frameworks
+                  <button className="edit-button ml-2">
+                    <Image
+                      src={editStatic}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="svg"
+                    />
+                    <Image
+                      src={editGif}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="gif"
+                      onClick={handleEditFrameworks}
+                    />
+                  </button>
+                </span>
+                <div className="gap-10 flex flex-wrap items-center justify-center mt-10 mb-10">
+                  {frameworks.length === 0 ? (
+                    <span className="text-xl">None</span>
+                  ) : (
+                    frameworks.map((framework) => (
+                      <label
+                        key={framework.value}
+                        className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg transition-all delay-150 w-44 border-none ${framework.bg} backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-lg`}
+                      >
+                        {framework.icon && (
+                          <Image
+                            src={framework.icon}
+                            alt={framework.label}
+                            width={
+                              framework.size ? parseInt(framework.size) : 50
+                            }
+                            height={50}
+                          />
+                        )}
+                        <span className="text-sm mt-3 ">{framework.label}</span>
+                      </label>
+                    ))
+                  )}
+                </div>
+              </div>
+              <div className="text-2xl">
+                <span className="flex justify-center items-center font-bold">
+                  Databases
+                  <button className="edit-button ml-2">
+                    <Image
+                      src={editStatic}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="svg"
+                    />
+                    <Image
+                      src={editGif}
+                      alt="Edit"
+                      width={20}
+                      height={20}
+                      className="gif"
+                      onClick={handleEditDatabases}
+                    />
+                  </button>
+                </span>
+                <div className="gap-10 flex flex-wrap items-center justify-center mt-10 mb-10">
+                  {databases.map((database) => (
+                    <label
+                      key={database.value}
+                      className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg cursor-pointer transition-all delay-150 w-44 border-none ${database.bg} backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-lg`}
+                    >
+                      {database.icon && (
+                        <Image
+                          src={database.icon}
+                          alt={database.label}
+                          width={database.size ? parseInt(database.size) : 50}
+                          height={50}
+                        />
+                      )}
+                      <span className="text-sm mt-3 ">{database.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                onClick={calculateWorth}
+                className="mb-12 mt-3"
+                effect={"expandIcon"}
+                icon={ArrowRightIcon}
+                iconPlacement="right"
+              >
                 Calculate Your Developer Worth
               </Button>
             </>

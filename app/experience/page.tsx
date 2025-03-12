@@ -15,6 +15,9 @@ const experience = () => {
   const frameworks = searchParams
     .getAll("frameworks")
     .flatMap((framework) => framework.split(", "));
+  const databases = searchParams
+    .getAll("databases")
+    .flatMap((database) => database.split(", "));
   const dev = searchParams.get("dev");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +28,12 @@ const experience = () => {
   const handleRedirect = () => {
     let language = languages.join(", ");
     let framework = frameworks.join(", ");
+    let database = databases.join(", ");
     const url = `/dev-worth?l=${encodeURIComponent(
       language
-    )}&f=${encodeURIComponent(framework)}&dev=${dev}&exp=${selectedExp}`;
+    )}&f=${encodeURIComponent(framework)}&d=${encodeURIComponent(
+      database
+    )}&dev=${dev}&exp=${selectedExp}`;
     redirect(url);
   };
 
@@ -50,57 +56,104 @@ const experience = () => {
   return (
     <div>
       <Background />
-      <div className="h-full w-full flex flex-col items-center z-10 relative mt-56">
-        {/* <GroupSizeSelector /> */}
-        <p>Select your years of experience in this field</p>
-        <label>
-          <input
-            type="radio"
-            value="0 - 1"
-            onChange={handleChange}
-            checked={selectedExp === "0 - 1"}
-          />
-          0 - 1 Yr
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="2 - 3"
-            onChange={handleChange}
-            checked={selectedExp === "2 - 3"}
-          />
-          2 - 3 Yrs
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="4 - 6"
-            onChange={handleChange}
-            checked={selectedExp === "4 - 6"}
-          />
-          4 - 6 Yrs
-        </label>
+      <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-24">
+        <p className="mt-10 mb-10 text-2xl font-semibold">
+          Select your Years of Experience in this field
+        </p>
+        <div className="radio-input">
+          <div className="glass">
+            <div className="glass-inner"></div>
+          </div>
+          <div className="selector">
+            <div className="choice">
+              <div>
+                <input
+                  className="choice-circle"
+                  type="radio"
+                  value="0 - 1"
+                  onChange={handleChange}
+                  checked={selectedExp === "0 - 1"}
+                  id="one"
+                />
+                <div className="ball"></div>
+              </div>
+              <label htmlFor="one" className="choice-name">
+                0 - 1 Year
+              </label>
+            </div>
+            <div className="choice">
+              <div>
+                <input
+                  className="choice-circle"
+                  type="radio"
+                  value="2 - 3"
+                  onChange={handleChange}
+                  checked={selectedExp === "2 - 3"}
+                  id="two"
+                />
+                <div className="ball"></div>
+              </div>
+              <label htmlFor="two" className="choice-name">
+                2 - 3 Years
+              </label>
+            </div>
+            <div className="choice">
+              <div>
+                <input
+                  className="choice-circle"
+                  type="radio"
+                  value="4 - 6"
+                  onChange={handleChange}
+                  checked={selectedExp === "4 - 6"}
+                  id="three"
+                />
+                <div className="ball"></div>
+              </div>
+              <label htmlFor="three" className="choice-name">
+                4 - 6 Years
+              </label>
+            </div>
+            <div className="choice">
+              <div>
+                <input
+                  className="choice-circle"
+                  type="radio"
+                  value="7 - 10"
+                  onChange={handleChange}
+                  checked={selectedExp === "7 - 10"}
+                  id="four"
+                />
+                <div className="ball"></div>
+              </div>
+              <label htmlFor="four" className="choice-name">
+                7 - 10 Years
+              </label>
+            </div>
+            <div className="choice">
+              <div>
+                <input
+                  className="choice-circle"
+                  type="radio"
+                  value="10+"
+                  onChange={handleChange}
+                  checked={selectedExp === "10+"}
+                  id="five"
+                />
+                <div className="ball"></div>
+              </div>
+              <label htmlFor="five" className="choice-name">
+                10+ Years
+              </label>
+            </div>
+          </div>
+        </div>
 
-        <label>
-          <input
-            type="radio"
-            value="7 - 10"
-            onChange={handleChange}
-            checked={selectedExp === "7 - 10"}
-          />
-          7 - 10 Yrs
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="10+"
-            onChange={handleChange}
-            checked={selectedExp === "10+"}
-          />
-          10+ Yrs
-        </label>
-        <p>{expMsg}</p>
-        <Button disabled={selectedExp.length <= 0} onClick={handleRedirect}>
+        <p className="text-xl mt-10 mb-10">{expMsg}</p>
+        <Button
+          disabled={selectedExp.length <= 0}
+          onClick={handleRedirect}
+          effect={"shineHover"}
+        >
           {selectedExp.length <= 0
             ? "Please select at least one option"
             : "Next"}

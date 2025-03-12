@@ -32,11 +32,10 @@ import express from "@/public/icons8-express-js.svg";
 import flask from "@/public/icons8-flask.svg";
 import flutter from "@/public/flutter.svg";
 import CustomCheckbox from "@/components/animations/CustomCheckbox";
-import { ArrowLeftIcon } from "lucide-react";
-import { setSelectedOptions } from "@/redux/slices/userSlice";
+import { ArrowRightIcon } from "lucide-react";
 
 const frontEndOptions = [
-  { value: "react.js", label: "React.js", icon: react, bg: "bg-blue-200" },
+  { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
   {
     value: "reactNative",
     label: "React Native",
@@ -49,7 +48,7 @@ const frontEndOptions = [
     icon: flutter,
     bg: "bg-blue-200",
   },
-  { value: "nextjs", label: "Nextjs", icon: nextjs, bg: "bg-gray-200" },
+  { value: "nextjs", label: "Next", icon: nextjs, bg: "bg-gray-200" },
   {
     value: "bootstrap",
     label: "Bootstrap",
@@ -77,7 +76,7 @@ const backEndOptions = [
     bg: "bg-slate-200",
     size: "65",
   },
-  { value: "nestjs", label: "Nestjs", icon: nestjs, bg: "bg-pink-200" },
+  { value: "nestjs", label: "Nest", icon: nestjs, bg: "bg-pink-200" },
 
   { value: "express", label: "Express", icon: express, bg: "bg-green-200" },
   { value: "net", label: ".Net", icon: net, bg: "bg-blue-200" },
@@ -107,7 +106,6 @@ const backEndOptions = [
 ];
 
 const Frameworks = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const languages = searchParams
     .getAll("languages")
@@ -124,7 +122,7 @@ const Frameworks = () => {
       frameworks = "none";
     }
 
-    const url = `/experience?languages=${encodeURIComponent(
+    const url = `/databases?languages=${encodeURIComponent(
       language
     )}&frameworks=${encodeURIComponent(frameworks)}&dev=${dev}`;
     redirect(url);
@@ -170,7 +168,7 @@ const Frameworks = () => {
                     (option.value === "flask" &&
                       languages.includes("python")) ||
                     (option.value === "laravel" && languages.includes("php")) ||
-                    (option.value === "net" && languages.includes("csharp")) ||
+                    (option.value === "net" && languages.includes("c#")) ||
                     (option.value === "gin" && languages.includes("go")) ||
                     (option.value === "fiber" && languages.includes("go")) ||
                     (option.value === "sinatra" &&
@@ -181,7 +179,11 @@ const Frameworks = () => {
                       languages.includes("java")) ||
                     (option.value === "springboot" &&
                       languages.includes("java")) ||
-                    (option.value === "rocket" && languages.includes("rust"))
+                    (option.value === "rocket" && languages.includes("rust")) ||
+                    (option.value === "unity" && languages.includes("c")) ||
+                    (option.value === "libuv" && languages.includes("c")) ||
+                    (option.value === "qt" && languages.includes("c++")) ||
+                    (option.value === "unreal" && languages.includes("c++"))
                 )}
                 selectedOptions={selectedFrameworks}
                 onChange={setselectedFrameworks}
@@ -201,7 +203,7 @@ const Frameworks = () => {
                   : languages.includes("js") || languages.includes("ts")
               )}
               selectedOptions={selectedFrameworks}
-              onChange={setSelectedOptions}
+              onChange={setselectedFrameworks}
             />
           </div>
         )}
@@ -230,7 +232,11 @@ const Frameworks = () => {
                   (option.value === "quarkus" && languages.includes("java")) ||
                   (option.value === "springboot" &&
                     languages.includes("java")) ||
-                  (option.value === "rocket" && languages.includes("rust"))
+                  (option.value === "rocket" && languages.includes("rust")) ||
+                  (option.value === "unity" && languages.includes("c")) ||
+                  (option.value === "libuv" && languages.includes("c")) ||
+                  (option.value === "qt" && languages.includes("c++")) ||
+                  (option.value === "unreal" && languages.includes("c++"))
               )}
               selectedOptions={selectedFrameworks}
               onChange={setselectedFrameworks}
@@ -238,7 +244,13 @@ const Frameworks = () => {
           </div>
         )}
 
-        <Button onClick={handleRedirect} effect={"gooeyLeft"} className="mt-10">
+        <Button
+          onClick={handleRedirect}
+          effect={"expandIcon"}
+          icon={ArrowRightIcon}
+          iconPlacement="right"
+          className="mt-10 mb-12"
+        >
           Next
         </Button>
       </div>
