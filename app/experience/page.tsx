@@ -2,8 +2,15 @@
 import Background from "@/components/animations/background";
 import GroupSizeSelector from "@/components/animations/CustomCheckbox";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import beginner from "@/public/smiling-face-with-halo (1).svg";
+import intermediate from "@/public/smiling-face-with-sunglasses.svg";
+import advanced from "@/public/nerd-face.svg";
+import expert from "@/public/cold-face.svg";
+import master from "@/public/skull.svg";
+import { ArrowRightIcon } from "lucide-react";
 
 const experience = () => {
   const [selectedExp, setSelectedExp] = useState<string>("");
@@ -40,7 +47,7 @@ const experience = () => {
   useEffect(() => {
     if (selectedExp.trim().length > 0) {
       if (selectedExp === "0 - 1") {
-        setExpMsg("Beginner 😇");
+        setExpMsg("Beginner ");
       } else if (selectedExp === "2 - 3") {
         setExpMsg("Intermediate 😎");
       } else if (selectedExp === "4 - 6") {
@@ -148,11 +155,85 @@ const experience = () => {
           </div>
         </div>
 
-        <p className="text-xl mt-10 mb-10">{expMsg}</p>
+        <div className="m-6 text-xl">
+          <p>
+            {selectedExp === "0 - 1" && (
+              <span className="flex">
+                Beginner{" "}
+                <Image
+                  src={beginner}
+                  alt="Emoji"
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </span>
+            )}
+          </p>
+          <p>
+            {selectedExp === "2 - 3" && (
+              <span className="flex">
+                Intermediate{" "}
+                <Image
+                  src={intermediate}
+                  alt="Emoji"
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </span>
+            )}
+          </p>
+          <p>
+            {selectedExp === "4 - 6" && (
+              <span className="flex">
+                Advanced{" "}
+                <Image
+                  src={advanced}
+                  alt="Emoji"
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </span>
+            )}
+          </p>
+          <p>
+            {selectedExp === "7 - 10" && (
+              <span className="flex">
+                Expert{" "}
+                <Image
+                  src={expert}
+                  alt="Emoji"
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </span>
+            )}
+          </p>
+          <p>
+            {selectedExp === "10+" && (
+              <span className="flex">
+                Master{" "}
+                <Image
+                  src={master}
+                  alt="Emoji"
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </span>
+            )}
+          </p>
+        </div>
         <Button
           disabled={selectedExp.length <= 0}
           onClick={handleRedirect}
-          effect={"shineHover"}
+          effect={"expandIcon"}
+          icon={ArrowRightIcon}
+          iconPlacement="right"
+          className="mt-5"
         >
           {selectedExp.length <= 0
             ? "Please select at least one option"

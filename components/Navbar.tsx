@@ -42,18 +42,7 @@ const Navbar = () => {
         onClick={() => redirect("/")}
       />
 
-      {user?.name ? (
-        <Button
-          effect="expandIcon"
-          icon={FaGithub}
-          iconPlacement="left"
-          className="absolute top-5 right-10 text-sm z-10"
-          size={"sm"}
-          onClick={disconnectGithub}
-        >
-          Disconnect GitHub
-        </Button>
-      ) : (
+      {user?.name ? null : (
         <Button
           effect="shineHover"
           icon={FaGithub}

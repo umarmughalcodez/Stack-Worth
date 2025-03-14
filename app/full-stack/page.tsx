@@ -155,7 +155,7 @@ const FullStack = () => {
             effect={"shineHover"}
             disabled={selectedLanguages.length <= 1}
             onClick={handleRedirect}
-            className="mt-5"
+            className="mt-10 mb-12"
           >
             {selectedLanguages.length <= 1
               ? "Please select at least two languages"

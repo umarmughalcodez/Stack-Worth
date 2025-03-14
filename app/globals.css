@@ -147,6 +147,12 @@
   }
 }
 
+@keyframes move {
+  100% {
+    transform: translate3d(0, 0, 1px) rotate(360deg);
+  }
+}
+
 .background {
   position: fixed;
   width: 100vw;
@@ -197,7 +203,8 @@
   box-shadow: -48vmin 0 6.523596771670462vmin currentColor;
 }
 .background span:nth-child(3) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 18%;
   left: 43%;
   animation-duration: 68s;
@@ -206,7 +213,8 @@
   box-shadow: -48vmin 0 6.131188060560394vmin currentColor;
 }
 .background span:nth-child(4) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 57%;
   left: 69%;
   animation-duration: 74s;
@@ -215,7 +223,8 @@
   box-shadow: -48vmin 0 6.13909658648567vmin currentColor;
 }
 .background span:nth-child(5) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 68%;
   left: 72%;
   animation-duration: 64s;
@@ -224,7 +233,8 @@
   box-shadow: 48vmin 0 6.415210836049474vmin currentColor;
 }
 .background span:nth-child(6) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 17%;
   left: 35%;
   animation-duration: 171s;
@@ -233,7 +243,8 @@
   box-shadow: 48vmin 0 6.035301967930728vmin currentColor;
 }
 .background span:nth-child(7) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 62%;
   left: 50%;
   animation-duration: 145s;
@@ -251,7 +262,8 @@
   box-shadow: 48vmin 0 6.673299451647619vmin currentColor;
 }
 .background span:nth-child(9) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 70%;
   left: 5%;
   animation-duration: 198s;
@@ -296,7 +308,8 @@
   box-shadow: -48vmin 0 6.944882175772397vmin currentColor;
 }
 .background span:nth-child(14) {
-  color: #49474d;
+  color: #4bfb4e;
+
   top: 68%;
   left: 90%;
   animation-duration: 61s;
@@ -388,20 +401,13 @@
 }
 html {
   font-family: Poppins;
-  color: #f0f0f0;
-}
-body {
-  background: #222;
-  color: #a2a5b3;
-}
-h1 {
-  color: white;
+  /* color: #f0f0f0; */
 }
 .card {
   color: #222;
   margin: 0 auto;
   padding: 2em;
-  width: 400px;
+  width: auto;
   height: auto;
   /* background-color: rgba(255, 255, 255, 0.5); */
   background-color: #ffffff;
@@ -453,4 +459,31 @@ h1 {
   to {
     --angle: 360deg;
   }
+}
+
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.moving-container {
+  display: flex;
+  width: max-content;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  animation: scroll 12s linear infinite;
 }

@@ -160,7 +160,9 @@ const Frameworks = () => {
                 options={backEndOptions.filter(
                   (option) =>
                     (option.value === "express" &&
-                      (languages.includes("js") || languages.includes("ts"))) ||
+                      (languages.includes("js") ||
+                        languages.includes("ts") ||
+                        languages.includes("nodejs"))) ||
                     (option.value === "nestjs" &&
                       (languages.includes("js") || languages.includes("ts"))) ||
                     (option.value === "django" &&
@@ -217,13 +219,15 @@ const Frameworks = () => {
               options={backEndOptions.filter(
                 (option) =>
                   (option.value === "express" &&
-                    (languages.includes("js") || languages.includes("ts"))) ||
+                    (languages.includes("js") ||
+                      languages.includes("ts") ||
+                      languages.includes("nodejs"))) ||
                   (option.value === "nestjs" &&
                     (languages.includes("js") || languages.includes("ts"))) ||
                   (option.value === "django" && languages.includes("python")) ||
                   (option.value === "flask" && languages.includes("python")) ||
                   (option.value === "laravel" && languages.includes("php")) ||
-                  (option.value === "net" && languages.includes("csharp")) ||
+                  (option.value === "net" && languages.includes("c#")) ||
                   (option.value === "gin" && languages.includes("go")) ||
                   (option.value === "fiber" && languages.includes("go")) ||
                   (option.value === "sinatra" && languages.includes("ruby")) ||

@@ -43,7 +43,7 @@ import unreal from "@/public/icons8-unreal-engine (1).svg";
 import laravel from "@/public/laravel.svg";
 import libuv from "@/public/libuv.svg";
 import quarkus from "@/public/quarkus.svg";
-import rocket from "@/public/rocket (1).svg";
+import rocket from "@/public/rocket.png";
 import sinatra from "@/public/sinatra.svg";
 import nextjs from "@/public/icons8-next.js.svg";
 import svelte1 from "@/public/svelte-icon.svg";
@@ -62,6 +62,11 @@ import aws from "@/public/aws.svg";
 import editStatic from "@/public/static_edit.svg";
 import editGif from "@/public/editgif.gif";
 import Card from "@/components/Card";
+import suitcase from "@/public/icons8-orange-suitcase-with-stickers-94.png";
+import programming from "@/public/programming.png";
+import programmer from "@/public/programmer (1).png";
+import senior from "@/public/app-development.png";
+import developer from "@/public/icons8-developer-94.png";
 
 interface OptionProps {
   value: string;
@@ -70,8 +75,6 @@ interface OptionProps {
   bg: string;
   size?: string;
 }
-
-const options = [];
 
 const DevWorth = () => {
   const [showCard, setShowCard] = useState(false);
@@ -82,7 +85,6 @@ const DevWorth = () => {
   const [databases, setDatabases] = useState<OptionProps[]>([]);
   const [dev, setDev] = useState<string>("unknown");
   const [exp, setExp] = useState<string>("0 - 1");
-  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const languageOptions: OptionProps[] = [
@@ -373,7 +375,8 @@ const DevWorth = () => {
       totalWorth *= devTypeMultiplier;
 
       // Average the total worth based on the number of skills
-      const totalSkills = languages.length + frameworks.length;
+      const totalSkills =
+        languages.length + frameworks.length + databases.length;
       if (totalSkills > 0) {
         totalWorth /= totalSkills;
       }
@@ -423,32 +426,29 @@ const DevWorth = () => {
     redirect(url);
   };
 
-  const fetchUser = async () => {
-    const session = await getSession();
-    setUser(session?.user as User);
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   let worthMessage = "";
   let tip = "";
+  let icon = null;
   if (worth < 30000) {
-    worthMessage = "Entry Level 💼";
+    worthMessage = "Entry Level Developer";
     tip = "Focus on building a strong foundation in coding";
+    icon = suitcase;
   } else if (worth < 60000) {
-    worthMessage = "Junior Developer 👨‍💻";
+    worthMessage = "Junior Developer";
     tip = "Start contributing to open-source projects";
+    icon = developer;
   } else if (worth < 130000) {
-    worthMessage = "Mid-Level Developer 💻";
+    worthMessage = "Mid-Level Developer";
     tip = "Consider getting certified in a specialized area";
+    icon = programming;
   } else if (worth < 180000) {
-    worthMessage = "Senior Developer 🧑‍💼";
+    worthMessage = "Senior Developer";
     tip = "Mentor junior developers and share your knowledge";
+    icon = programmer;
   } else {
-    worthMessage = "Expert Developer 🚀";
+    worthMessage = "Expert Developer";
     tip = "Stay updated with the latest industry trends and technologies";
+    icon = rocket;
   }
 
   return (
@@ -460,7 +460,12 @@ const DevWorth = () => {
         <div className="h-full w-[90%] z-10 flex flex-col items-center justify-center relative mt-20 text-center">
           {showCard ? (
             <div>
-              <Card worthMsg={worthMessage} worth={worth} tip={tip} />
+              <Card
+                worthMsg={worthMessage}
+                worth={worth}
+                tip={tip}
+                icon={icon}
+              />
             </div>
           ) : (
             <>
@@ -516,7 +521,7 @@ const DevWorth = () => {
                 </span>
               </div>
 
-              <div className="text-2xl mt-8 mb-10">
+              <div className="text-2xl mt-5 mb-10">
                 <span className="text-2xl flex items-center justify-center font-bold">
                   Languages
                   <button className="edit-button ml-2">
