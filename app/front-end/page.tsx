@@ -8,6 +8,10 @@ import html from "@/public/icons8-html-5.svg";
 import css from "@/public/icons8-css-logo.svg";
 import js from "@/public/icons8-javascript.svg";
 import ts from "@/public/icons8-typescript.svg";
+import { ArrowRightIcon } from "lucide-react";
+import loader from "@/public/loading.gif";
+import Image from "next/image";
+import Loader from "@/components/Loader";
 
 const options = [
   { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
@@ -18,6 +22,13 @@ const options = [
 
 const FrontEnd = () => {
   const [selectedLanguages, setselectedLanguages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   const handleRedirect = () => {
     const languages = selectedLanguages.join(", ");
@@ -42,27 +53,33 @@ const FrontEnd = () => {
   return (
     <div>
       <Background />
-      <div className="relative z-10 flex flex-col items-center w-full h-full mt-60 overflow-hidden">
-        <p className="font-bold text-2xl mb-20">
-          Select Your Front End Languages
-        </p>
-        <GroupSizeSelector
-          options={options}
-          selectedOptions={selectedLanguages}
-          onChange={setselectedLanguages}
-        />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="relative z-10 flex flex-col items-center w-full h-full mt-24 overflow-hidden">
+          <p className="font-bold text-2xl mb-20">
+            Select Your Front End Languages
+          </p>
+          <GroupSizeSelector
+            options={options}
+            selectedOptions={selectedLanguages}
+            onChange={setselectedLanguages}
+          />
 
-        <Button
-          effect={"shineHover"}
-          onClick={handleRedirect}
-          disabled={selectedLanguages.length <= 0}
-          className="mt-10"
-        >
-          {selectedLanguages.length <= 0
-            ? "Please select at least 1 language"
-            : "Next"}
-        </Button>
-      </div>
+          <Button
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
+            onClick={handleRedirect}
+            disabled={selectedLanguages.length <= 0}
+            className="mt-10 mb-12"
+          >
+            {selectedLanguages.length <= 0
+              ? "Please select at least 1 language"
+              : "Next"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -64,8 +64,7 @@ import editGif from "@/public/editgif.gif";
 import Card from "@/components/Card";
 import suitcase from "@/public/icons8-orange-suitcase-with-stickers-94.png";
 import programming from "@/public/programming.png";
-import programmer from "@/public/programmer (1).png";
-import senior from "@/public/app-development.png";
+import programmer from "@/public/app-development.png";
 import developer from "@/public/icons8-developer-94.png";
 
 interface OptionProps {
@@ -390,7 +389,7 @@ const DevWorth = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 5000);
   }, []);
 
   const handleEditFrameworks = () => {
@@ -466,6 +465,15 @@ const DevWorth = () => {
                 tip={tip}
                 icon={icon}
               />
+              <Button
+                effect={"ringHover"}
+                className="mt-5 mb-8"
+                onClick={() =>
+                  redirect("https://github.com/umarmughalcodez/Stack-Worth")
+                }
+              >
+                Drop a ⭐
+              </Button>
             </div>
           ) : (
             <>

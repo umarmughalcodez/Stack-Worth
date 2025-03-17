@@ -16,7 +16,7 @@ export default function RatingComponent() {
       setShowConfirmation(false);
       setRating(0);
       setFeedback("");
-    }, 3000);
+    }, 5000);
   };
 
   if (!showPopup) return null;
@@ -29,6 +29,9 @@ export default function RatingComponent() {
             <Image src={check} alt="Check" width={50} height={50} />
             <p className="text-green-600 text-lg mt-2">
               Thanks for your feedback!
+            </p>
+            <p className="text-lg mt-2">
+              If you like this project, Kindly drop a ⭐ on GitHub
             </p>
           </div>
         ) : (

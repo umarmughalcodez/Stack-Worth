@@ -34,7 +34,7 @@ const CustomCheckbox: React.FC<{
       {options.map((option) => (
         <label
           key={option.value}
-          className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg  transition-all delay-150 w-44 border-none ${
+          className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg  transition-all delay-100 active:scale-95 w-44 border-none ${
             selectedOptions.includes(option.value)
               ? `${
                   option.bg as string

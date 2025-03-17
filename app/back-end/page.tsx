@@ -15,6 +15,7 @@ import go1 from "@/public/icons8-go-logo.svg";
 import rust from "@/public/rust.svg";
 import CustomCheckbox from "@/components/animations/CustomCheckbox";
 import Loader from "@/components/Loader";
+import { ArrowRightIcon } from "lucide-react";
 
 const options = [
   { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
@@ -60,7 +61,7 @@ const BackEnd = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-[95%] h-full z-10 relative grid place-items-center mt-40">
+        <div className="w-[95%] h-full z-10 relative grid place-items-center mt-20">
           <p className="font-bold text-2xl mb-10">
             Select Your Back End Languages
           </p>
@@ -70,8 +71,10 @@ const BackEnd = () => {
             options={options}
           />
           <Button
-            className="mt-10"
-            effect={"shineHover"}
+            className="mt-10 mb-12"
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
             onClick={handleRedirect}
             disabled={selectedLanguages.length <= 0}
           >

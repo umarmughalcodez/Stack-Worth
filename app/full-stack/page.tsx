@@ -20,6 +20,7 @@ import go from "@/public/icons8-go-logo.svg";
 import rust from "@/public/rust.svg";
 import CustomCheckbox from "@/components/animations/CustomCheckbox";
 import Loader from "@/components/Loader";
+import { ArrowRightIcon } from "lucide-react";
 
 const frontEndOptions = [
   { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
@@ -152,7 +153,9 @@ const FullStack = () => {
           </div>
 
           <Button
-            effect={"shineHover"}
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
             disabled={selectedLanguages.length <= 1}
             onClick={handleRedirect}
             className="mt-10 mb-12"

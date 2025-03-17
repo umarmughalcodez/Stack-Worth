@@ -6,6 +6,11 @@ import { getSession, signIn, signOut } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import logo from "@/public/logo.png";
 import Image from "next/image";
+import { VscGithub } from "react-icons/vsc";
+import Link from "next/link";
+import github_static from "@/public/github_static.svg";
+import git from "@/public/git_gif.gif";
+import github_gif from "@/public/github_gif.gif";
 
 interface User {
   name: string;
@@ -42,9 +47,34 @@ const Navbar = () => {
         onClick={() => redirect("/")}
       />
 
-      {user?.name ? null : (
+      {user?.name ? (
+        <button className="edit-button absolute top-5 right-14">
+          <Image
+            src={github_static}
+            alt="Github"
+            width={40}
+            height={40}
+            title="Drop a Star"
+            onClick={() =>
+              redirect("https://github.com/umarmughalcodez/Stack-Worth")
+            }
+            className="svg"
+          />
+          <Image
+            src={github_gif}
+            alt="Github"
+            width={40}
+            height={40}
+            className="gif"
+            onClick={() =>
+              redirect("https://github.com/umarmughalcodez/Stack-Worth")
+            }
+            title="Drop a Star"
+          />
+        </button>
+      ) : (
         <Button
-          effect="shineHover"
+          effect="expandIcon"
           icon={FaGithub}
           iconPlacement="left"
           className="absolute top-5 right-10 text-sm z-10 bg-none"
@@ -57,5 +87,4 @@ const Navbar = () => {
     </div>
   );
 };
-
 export default Navbar;

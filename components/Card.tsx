@@ -1,13 +1,15 @@
+
 "use client";
 import { User } from "@/types/User";
 import { getSession } from "next-auth/react";
 import Image, { StaticImageData } from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import githubUsername from "github-username";
 import Ratings from "./Ratings";
 import money1 from "@/public/money-with-wings.svg";
 import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import html2canvas from "html2canvas";
 
 interface CardProps {
   worthMsg: string;
@@ -21,6 +23,8 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
   const [user, setUser] = useState<User | null>(null);
   const [gitHubUsername, setGitHubUsername] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [showShareButtons, setShowShareButtons] = useState(true); // Track share buttons visibility
 
   const fetchUser = async () => {
     const session = await getSession();
@@ -38,8 +42,49 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
     }, 4500);
   }, []);
 
+  // Save div as image
+  const saveAsImage = () => {
+    // Hide share buttons before capturing the image
+
+    setShowShareButtons(false);
+
+    if (cardRef.current) {
+      html2canvas(cardRef.current).then((canvas) => {
+        const dataUrl = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "developer-worth-card.png";
+        link.click();
+
+        // Restore share buttons after saving the image
+        setTimeout(() => {
+          setShowShareButtons(true);
+        }, 3000);
+      });
+    }
+  };
+
+  // Share via WhatsApp
+  const shareOnWhatsApp = () => {
+    const message = `Check out my Developer Worth! ${window.location.href}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  // Share via other social media platforms (e.g., Twitter)
+  const shareOnSocials = () => {
+    const message = `Check out my Developer Worth! ${window.location.href}`;
+    const socialUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(socialUrl, "_blank");
+  };
+
   return (
-    <div className="card w-[50%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5">
+    <div
+      ref={cardRef}
+      className="card w-[50%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5"
+    >
       {user?.image && (
         <Image
           src={user?.image as string}
@@ -54,14 +99,12 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
           Congratulations!
         </span>
         @{gitHubUsername}
-        {/* {user?.name} */}
       </span>
       <p className="text-lg m-3 flex">
         Your Estimated Developer Worth is{" "}
         <span className="text-green-500 font-semibold ml-2 mr-1">
           ${worth.toLocaleString()}
         </span>{" "}
-        {/* <Image src={money} alt="Money" width={20} height={20} /> */}
         <Image src={money1} alt="Money" width={20} height={20} />
       </p>
 
@@ -81,6 +124,30 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
         <span className="text-green-500 font-semibold">Pro Tip:</span> {tip}
       </p>
       {showPopup && <Ratings />}
+
+      {/* Action Buttons */}
+      {showShareButtons && (
+        <div className="mt-4 flex space-x-4">
+          <button
+            onClick={saveAsImage}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Save as Image
+          </button>
+          <button
+            onClick={shareOnWhatsApp}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Share on WhatsApp
+          </button>
+          <button
+            onClick={shareOnSocials}
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            Share on Twitter
+          </button>
+        </div>
+      )}
     </div>
   );
 };

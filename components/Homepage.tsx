@@ -1,13 +1,15 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { User } from "@/types/User";
 import { getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
 import { ArrowRightIcon } from "lucide-react";
 import Background from "./animations/background";
+import LiveScrollCards from "./LiveScrollCards";
+import DemoCard from "./DemoCard";
+import Guide from "./Guide";
+import Reason from "./Reason";
 
 const Homepage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -21,12 +23,26 @@ const Homepage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="">
       <Background />
       <div className="h-full w-full flex flex-col items-center z-10 relative text-2xl">
-        <p className="mt-56 mb-24 font-semibold text-3xl text-[#222]">
-          "Find Out Your Stack Worth"
-        </p>
+        <div className="grid place-items-center mt-24 mb-24 space-y-16">
+          <p className="font-semibold text-3xl text-[#222]">
+            Find Out Your Developer Worth!
+          </p>
+          <p className="w-[90%] leading-6 text-center text-lg">
+            Select your {/* <span className="text-green-400 font-semibold"> */}
+            {/* </span>{" "} */}
+            Tech Stack, Skills & Experience to see how much you can earn as a
+            developer
+          </p>
+          <p className="font-semibold w-[90%] leading-6 text-center ">
+            <span className="text-white text-3xl bg-green-400 rounded-2xl px-3 py-1">
+              5,000+
+            </span>{" "}
+            Developers have calculated their worth this month
+          </p>
+        </div>
         <div className="grid place-items-center">
           {user?.name ? (
             <Button
@@ -37,46 +53,23 @@ const Homepage = () => {
                 redirect("/dev-type");
               }}
             >
-              Let's Check!
+              Calculate Your Worth!
             </Button>
           ) : (
             <>
-              <p className="text-lg">
+              <p className="text-lg font-normal">
                 Please connect your GitHub account first!
               </p>
             </>
           )}
-          <span>Example</span>
-          {/* <div className="card w-[40%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5">
-                    {user?.image && (
-                      <Image
-                        src={user?.image as string}
-                        alt="User's Image"
-                        width={120}
-                        height={120}
-                        className="rounded-full"
-                      />
-                    )}
-                    <span className="mt-5 mb-3 text-lg">
-                      <span className="text-green-500 mr-2 font-semibold">
-                        Congratulations!
-                      </span>
-                      @maxwell
-                      {/* {user?.name} */}
-          {/* </span>
-                    <p className="text-lg m-3">
-                      Your Estimated Developer Worth is{" "}
-                      <span className="text-green-500 font-semibold">
-                        $246,578.998
-                      </span>{" "}
-                      💸
-                    </p>
-              
-                    <p className="text-lg m-3">You are a {worthMsg}</p>
-                    <p className="text-lg mb-4">
-                      <span className="text-green-500 font-semibold">Pro Tip:</span> {tip}
-                    </p>
-                  </div> */}
+          <span className="text-3xl font-bold mt-28 w-[85%] text-center">
+            What <span className="text-green-400">Developers</span> and{" "}
+            <span className="text-green-400">People</span> Say About Us!
+          </span>
+          <LiveScrollCards />
+          <Guide />
+          <DemoCard />
+          <Reason />
         </div>
       </div>
     </div>

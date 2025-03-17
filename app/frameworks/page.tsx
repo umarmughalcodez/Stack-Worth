@@ -33,6 +33,7 @@ import flask from "@/public/icons8-flask.svg";
 import flutter from "@/public/flutter.svg";
 import CustomCheckbox from "@/components/animations/CustomCheckbox";
 import { ArrowRightIcon } from "lucide-react";
+import Loader from "@/components/Loader";
 
 const frontEndOptions = [
   { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
@@ -112,6 +113,7 @@ const Frameworks = () => {
     .flatMap((lang) => lang.split(", "));
   const dev = searchParams.get("dev");
 
+  const [loading, setLoading] = useState(true);
   const [selectedFrameworks, setselectedFrameworks] = useState<string[]>([]);
 
   const handleRedirect = () => {
@@ -128,15 +130,86 @@ const Frameworks = () => {
     redirect(url);
   };
 
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <div>
       <Background />
-      <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-24">
-        <p className="text-3xl font-semibold">Select Frameworks & Libraries</p>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-20">
+          <p className="text-3xl font-semibold">
+            Select Frameworks & Libraries
+          </p>
 
-        {dev === "full-stack" && (
-          <div className="w-[90%] h-auto flex">
-            <div className="w-[50%] flex flex-col items-center">
+          {dev === "full-stack" && (
+            <div className="w-[90%] h-auto flex">
+              <div className="w-[50%] flex flex-col items-center">
+                <p className="text-xl font-semibold mt-10 mb-5">
+                  Select Front End Frameworks
+                </p>
+                <CustomCheckbox
+                  options={frontEndOptions.filter((option) =>
+                    option.value === "bootstrap" ||
+                    option.value === "tailwindcss"
+                      ? languages.includes("css")
+                      : languages.includes("js") || languages.includes("ts")
+                  )}
+                  selectedOptions={selectedFrameworks}
+                  onChange={setselectedFrameworks}
+                />
+              </div>
+
+              <div className="w-[50%] flex flex-col items-center">
+                <p className="text-xl font-semibold mt-10 mb-5">
+                  Select Back End Frameworks
+                </p>
+
+                <CustomCheckbox
+                  options={backEndOptions.filter(
+                    (option) =>
+                      (option.value === "express" &&
+                        (languages.includes("js") ||
+                          languages.includes("ts") ||
+                          languages.includes("nodejs"))) ||
+                      (option.value === "nestjs" &&
+                        (languages.includes("js") ||
+                          languages.includes("ts"))) ||
+                      (option.value === "django" &&
+                        languages.includes("python")) ||
+                      (option.value === "flask" &&
+                        languages.includes("python")) ||
+                      (option.value === "laravel" &&
+                        languages.includes("php")) ||
+                      (option.value === "net" && languages.includes("c#")) ||
+                      (option.value === "gin" && languages.includes("go")) ||
+                      (option.value === "fiber" && languages.includes("go")) ||
+                      (option.value === "sinatra" &&
+                        languages.includes("ruby")) ||
+                      (option.value === "rubyonrails" &&
+                        languages.includes("ruby")) ||
+                      (option.value === "quarkus" &&
+                        languages.includes("java")) ||
+                      (option.value === "springboot" &&
+                        languages.includes("java")) ||
+                      (option.value === "rocket" &&
+                        languages.includes("rust")) ||
+                      (option.value === "unity" && languages.includes("c")) ||
+                      (option.value === "libuv" && languages.includes("c")) ||
+                      (option.value === "qt" && languages.includes("c++")) ||
+                      (option.value === "unreal" && languages.includes("c++"))
+                  )}
+                  selectedOptions={selectedFrameworks}
+                  onChange={setselectedFrameworks}
+                />
+              </div>
+            </div>
+          )}
+          {dev === "front-end" && (
+            <div className="flex flex-col items-center">
               <p className="text-xl font-semibold mt-10 mb-5">
                 Select Front End Frameworks
               </p>
@@ -150,8 +223,9 @@ const Frameworks = () => {
                 onChange={setselectedFrameworks}
               />
             </div>
-
-            <div className="w-[50%] flex flex-col items-center">
+          )}
+          {dev === "back-end" && (
+            <div className="flex flex-col items-center">
               <p className="text-xl font-semibold mt-10 mb-5">
                 Select Back End Frameworks
               </p>
@@ -191,73 +265,19 @@ const Frameworks = () => {
                 onChange={setselectedFrameworks}
               />
             </div>
-          </div>
-        )}
-        {dev === "front-end" && (
-          <div className="flex flex-col items-center">
-            <p className="text-xl font-semibold mt-10 mb-5">
-              Select Front End Frameworks
-            </p>
-            <CustomCheckbox
-              options={frontEndOptions.filter((option) =>
-                option.value === "bootstrap" || option.value === "tailwindcss"
-                  ? languages.includes("css")
-                  : languages.includes("js") || languages.includes("ts")
-              )}
-              selectedOptions={selectedFrameworks}
-              onChange={setselectedFrameworks}
-            />
-          </div>
-        )}
-        {dev === "back-end" && (
-          <div>
-            <p className="text-xl font-semibold mt-10 mb-5">
-              Select Back End Frameworks
-            </p>
+          )}
 
-            <CustomCheckbox
-              options={backEndOptions.filter(
-                (option) =>
-                  (option.value === "express" &&
-                    (languages.includes("js") ||
-                      languages.includes("ts") ||
-                      languages.includes("nodejs"))) ||
-                  (option.value === "nestjs" &&
-                    (languages.includes("js") || languages.includes("ts"))) ||
-                  (option.value === "django" && languages.includes("python")) ||
-                  (option.value === "flask" && languages.includes("python")) ||
-                  (option.value === "laravel" && languages.includes("php")) ||
-                  (option.value === "net" && languages.includes("c#")) ||
-                  (option.value === "gin" && languages.includes("go")) ||
-                  (option.value === "fiber" && languages.includes("go")) ||
-                  (option.value === "sinatra" && languages.includes("ruby")) ||
-                  (option.value === "rubyonrails" &&
-                    languages.includes("ruby")) ||
-                  (option.value === "quarkus" && languages.includes("java")) ||
-                  (option.value === "springboot" &&
-                    languages.includes("java")) ||
-                  (option.value === "rocket" && languages.includes("rust")) ||
-                  (option.value === "unity" && languages.includes("c")) ||
-                  (option.value === "libuv" && languages.includes("c")) ||
-                  (option.value === "qt" && languages.includes("c++")) ||
-                  (option.value === "unreal" && languages.includes("c++"))
-              )}
-              selectedOptions={selectedFrameworks}
-              onChange={setselectedFrameworks}
-            />
-          </div>
-        )}
-
-        <Button
-          onClick={handleRedirect}
-          effect={"expandIcon"}
-          icon={ArrowRightIcon}
-          iconPlacement="right"
-          className="mt-10 mb-12"
-        >
-          Next
-        </Button>
-      </div>
+          <Button
+            onClick={handleRedirect}
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
+            className="mt-10 mb-12"
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

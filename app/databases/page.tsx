@@ -15,6 +15,7 @@ import firebase from "@/public/file-type-firebase.svg";
 import aws from "@/public/aws.svg";
 import CustomCheckbox from "@/components/animations/CustomCheckbox";
 import { Button } from "@/components/ui/button";
+import { ArrowRightIcon } from "lucide-react";
 
 const options = [
   {
@@ -111,8 +112,10 @@ const databases = () => {
         />
         <Button
           disabled={selectedDatabases.length <= 0}
-          className="mt-10"
-          effect={"shineHover"}
+          className="mt-10 mb-12"
+          effect={"expandIcon"}
+          icon={ArrowRightIcon}
+          iconPlacement="right"
           onClick={handleRedirect}
         >
           {selectedDatabases.length <= 0
