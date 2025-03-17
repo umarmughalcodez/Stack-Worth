@@ -6,11 +6,11 @@ import { getSession, signIn, signOut } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import logo from "@/public/logo.png";
 import Image from "next/image";
-import { VscGithub } from "react-icons/vsc";
-import Link from "next/link";
 import github_static from "@/public/github_static.svg";
-import git from "@/public/git_gif.gif";
 import github_gif from "@/public/github_gif.gif";
+import { IoIosArrowBack } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface User {
   name: string;
@@ -20,12 +20,32 @@ interface User {
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
 
-  const connectGithub = async () => {
-    await signIn("github", { redirectTo: "/" });
+  const router = useRouter();
+  const pathname = usePathname();
+  const [history, setHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    const storedPaths = JSON.parse(localStorage.getItem("history") || "[]");
+    setHistory(storedPaths);
+  }, []);
+
+  const handleBack = () => {
+    let storedPaths = JSON.parse(localStorage.getItem("history") || "[]");
+
+    if (storedPaths.length > 1) {
+      storedPaths.pop(); // Remove current path
+      const previousPath = storedPaths[storedPaths.length - 1]; // Get last visited path
+
+      localStorage.setItem("history", JSON.stringify(storedPaths)); // Update localStorage
+      setHistory(storedPaths); // Update state
+      router.push(previousPath);
+    } else {
+      router.push("/"); // Default fallback if no history
+    }
   };
 
-  const disconnectGithub = async () => {
-    await signOut({ redirectTo: "/" });
+  const connectGithub = async () => {
+    await signIn("github", { redirectTo: "/" });
   };
 
   useEffect(() => {
@@ -38,6 +58,20 @@ const Navbar = () => {
 
   return (
     <div className=" h-24 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
+      {pathname === "/" ? null : (
+        <span className="absolute top-9 left-16 text-black text-xl flex items-center justify-center">
+          <IoIosArrowBack />
+          <Button
+            effect={"hoverUnderline"}
+            variant={"link"}
+            onClick={handleBack}
+            className="m-0 p-1 text-lg"
+          >
+            Back
+          </Button>
+        </span>
+      )}
+
       <Image
         src={logo}
         alt="Logo"
@@ -56,18 +90,25 @@ const Navbar = () => {
             height={40}
             title="Drop a Star"
             onClick={() =>
-              redirect("https://github.com/umarmughalcodez/Stack-Worth")
+              window.open(
+                "https://github.com/umarmughalcodez/Stack-Worth",
+                "_blank"
+              )
             }
             className="svg"
           />
           <Image
             src={github_gif}
             alt="Github"
+            unoptimized
             width={40}
             height={40}
             className="gif"
             onClick={() =>
-              redirect("https://github.com/umarmughalcodez/Stack-Worth")
+              window.open(
+                "https://github.com/umarmughalcodez/Stack-Worth",
+                "_blank"
+              )
             }
             title="Drop a Star"
           />

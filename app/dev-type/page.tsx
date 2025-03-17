@@ -8,6 +8,7 @@ import monitor from "@/public/monitor-one.svg";
 import server from "@/public/computer-computers-servers-electronics-technology.svg";
 import globe from "@/public/globe-with-meridians.svg";
 import Image, { StaticImageData } from "next/image";
+import Loader from "@/components/Loader";
 
 const options = [
   {
@@ -32,7 +33,7 @@ const options = [
 
 const DeveloperType = () => {
   const [showFullStackMsg, setShowFullStackMsg] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,54 +93,63 @@ const DeveloperType = () => {
   return (
     <div>
       <Background />
-      <div className="flex flex-col items-center z-10 h-full w-full justify-center relative">
-        <p className="text-2xl font-bold mt-36 mb-16">
-          What Type Of Developer Are You?
-        </p>
-        <div className="flex gap-10 mb-10 flex-wrap">
-          {options.map((option) => (
-            <label
-              key={option.value}
-              className={`flex flex-col items-center justify-center gap-1 h-40 border rounded-lg transition-all delay-150 w-44 border-none ${
-                selectedOptions.includes(option.value)
-                  ? `${option.bg as string} shadow-[#444] shadow-lg`
-                  : "backdrop-blur-md"
-              }`}
-            >
-              <input
-                type="checkbox"
-                name="groupSize"
-                value={option.value}
-                checked={selectedOptions.includes(option.value)}
-                onChange={handleChange}
-                className="hidden"
-              />
-              {option.icon && (
-                <Image src={option.icon} alt="Image" width={50} height={50} />
-              )}
-
-              <span className="text-sm mt-3 font-semibold">{option.label}</span>
-            </label>
-          ))}
-        </div>
-        {showFullStackMsg && (
-          <p className="text-lg m-3">
-            Looks Like you are a Full Stack Developer!
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col items-center z-10 h-full w-full justify-center relative">
+          <p className="text-2xl font-bold mt-36 mb-16">
+            What Type Of Developer Are You?
           </p>
-        )}
-        {selectedOptions.length <= 0 ? (
-          <Button disabled={true}>Please Select at least one option</Button>
-        ) : (
-          <Button
-            onClick={handleRedirect}
-            effect={"expandIcon"}
-            icon={ArrowRightIcon}
-            iconPlacement="right"
-          >
-            Next
-          </Button>
-        )}
-      </div>
+          <div className="flex gap-10 mb-10 flex-wrap items-center justify-center">
+            {options.map((option) => (
+              <label
+                key={option.value}
+                className={`flex flex-col items-center justify-center gap-1 h-40 border rounded-lg transition-all delay-150 w-44 border-none ${
+                  selectedOptions.includes(option.value)
+                    ? `${option.bg as string} shadow-[#444] shadow-lg`
+                    : "backdrop-blur-md"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  name="groupSize"
+                  value={option.value}
+                  checked={selectedOptions.includes(option.value)}
+                  onChange={handleChange}
+                  className="hidden"
+                />
+                {option.icon && (
+                  <Image src={option.icon} alt="Image" width={50} height={50} />
+                )}
+
+                <span className="text-sm mt-3 font-semibold">
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+          {showFullStackMsg && (
+            <p className="text-lg m-3">
+              Looks Like you are a Full Stack Developer!
+            </p>
+          )}
+          {selectedOptions.length <= 0 ? (
+            <Button disabled={true} className="mb-8">
+              Please Select at least one option
+            </Button>
+          ) : (
+            <Button
+              className="mb-8"
+              onClick={handleRedirect}
+              effect={"expandIcon"}
+              icon={ArrowRightIcon}
+              iconPlacement="right"
+            >
+              Next
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

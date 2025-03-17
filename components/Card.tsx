@@ -1,15 +1,16 @@
-
 "use client";
 import { User } from "@/types/User";
 import { getSession } from "next-auth/react";
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import githubUsername from "github-username";
-import Ratings from "./Ratings";
 import money1 from "@/public/money-with-wings.svg";
-import { MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
+import { Button } from "./ui/button";
+import { SiWhatsapp } from "react-icons/si";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaImage } from "react-icons/fa6";
 
 interface CardProps {
   worthMsg: string;
@@ -24,7 +25,6 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
   const [gitHubUsername, setGitHubUsername] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [showShareButtons, setShowShareButtons] = useState(true); // Track share buttons visibility
 
   const fetchUser = async () => {
     const session = await getSession();
@@ -42,12 +42,7 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
     }, 4500);
   }, []);
 
-  // Save div as image
   const saveAsImage = () => {
-    // Hide share buttons before capturing the image
-
-    setShowShareButtons(false);
-
     if (cardRef.current) {
       html2canvas(cardRef.current).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
@@ -55,18 +50,12 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
         link.href = dataUrl;
         link.download = "developer-worth-card.png";
         link.click();
-
-        // Restore share buttons after saving the image
-        setTimeout(() => {
-          setShowShareButtons(true);
-        }, 3000);
       });
     }
   };
 
-  // Share via WhatsApp
   const shareOnWhatsApp = () => {
-    const message = `Check out my Developer Worth! ${window.location.href}`;
+    const message = `Hey, check out my Developer Worth! ${window.location.href}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
@@ -83,7 +72,7 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
   return (
     <div
       ref={cardRef}
-      className="card w-[50%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5"
+      className="card w-[50%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5 hover:buttons-visible"
     >
       {user?.image && (
         <Image
@@ -100,7 +89,7 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
         </span>
         @{gitHubUsername}
       </span>
-      <p className="text-lg m-3 flex">
+      <p className="text-lg m-3 flex items-center justify-center break-words">
         Your Estimated Developer Worth is{" "}
         <span className="text-green-500 font-semibold ml-2 mr-1">
           ${worth.toLocaleString()}
@@ -123,31 +112,39 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
       <p className="text-lg mb-4 mt-2">
         <span className="text-green-500 font-semibold">Pro Tip:</span> {tip}
       </p>
-      {showPopup && <Ratings />}
+      {/* {showPopup && <Ratings />} */}
 
-      {/* Action Buttons */}
-      {showShareButtons && (
-        <div className="mt-4 flex space-x-4">
-          <button
-            onClick={saveAsImage}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Save as Image
-          </button>
-          <button
-            onClick={shareOnWhatsApp}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Share on WhatsApp
-          </button>
-          <button
-            onClick={shareOnSocials}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Share on Twitter
-          </button>
-        </div>
-      )}
+      <div className="mt-4 flex space-x-4 buttons-hidden">
+        <Button
+          onClick={saveAsImage}
+          effect={"shineHover"}
+          className="bg-red-500 hover:bg-opacity-80 text-white px-4 py-2 rounded flex items-center justify-center  hover:scale-105 transition-all delay-75"
+        >
+          Save as{" "}
+          <span>
+            <FaImage />
+          </span>
+        </Button>
+        <Button
+          effect={"shineHover"}
+          onClick={shareOnWhatsApp}
+          className="bg-green-500 text-white rounded hover:bg-opacity-80 flex items-center justify-center  hover:scale-105 transition-all delay-75"
+        >
+          Share on {/* <span> */}
+          <SiWhatsapp />
+          {/* </span> */}
+        </Button>
+        <Button
+          onClick={shareOnSocials}
+          effect={"shineHover"}
+          className="bg-[#222] text-white px-4 py-2 rounded hover:bg-opacity-80 flex items-center justify-center hover:scale-105 transition-all delay-75"
+        >
+          Share on
+          <span>
+            <FaXTwitter />
+          </span>
+        </Button>
+      </div>
     </div>
   );
 };

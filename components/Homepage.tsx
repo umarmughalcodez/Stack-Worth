@@ -27,16 +27,16 @@ const Homepage = () => {
       <Background />
       <div className="h-full w-full flex flex-col items-center z-10 relative text-2xl">
         <div className="grid place-items-center mt-24 mb-24 space-y-16">
-          <p className="font-semibold text-3xl text-[#222]">
-            Find Out Your Developer Worth!
-          </p>
-          <p className="w-[90%] leading-6 text-center text-lg">
-            Select your {/* <span className="text-green-400 font-semibold"> */}
-            {/* </span>{" "} */}
-            Tech Stack, Skills & Experience to see how much you can earn as a
-            developer
-          </p>
-          <p className="font-semibold w-[90%] leading-6 text-center ">
+          <div className="grid place-items-center space-y-8">
+            <p className="font-semibold text-3xl">
+              Find Out Your Developer Worth!
+            </p>
+            <p className="w-[90%] leading-6 text-center text-lg">
+              Select your Tech Stack, Skills & Experience to see how much you
+              can earn as a developer
+            </p>
+          </div>
+          <p className="font-semibold w-[90%] leading-9 text-center">
             <span className="text-white text-3xl bg-green-400 rounded-2xl px-3 py-1">
               5,000+
             </span>{" "}

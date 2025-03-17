@@ -1,10 +1,8 @@
 "use client";
-
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
-import { User } from "@/types/User";
-import { ArrowRightIcon, Loader } from "lucide-react";
-import { getSession } from "next-auth/react";
+import { FaStar } from "react-icons/fa";
+import Loader from "@/components/Loader";
 import Image, { StaticImageData } from "next/image";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -60,7 +58,6 @@ import flask from "@/public/icons8-flask.svg";
 import flutter from "@/public/flutter.svg";
 import aws from "@/public/aws.svg";
 import editStatic from "@/public/static_edit.svg";
-import editGif from "@/public/editgif.gif";
 import Card from "@/components/Card";
 import suitcase from "@/public/icons8-orange-suitcase-with-stickers-94.png";
 import programming from "@/public/programming.png";
@@ -389,7 +386,7 @@ const DevWorth = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 300);
   }, []);
 
   const handleEditFrameworks = () => {
@@ -407,7 +404,7 @@ const DevWorth = () => {
   const handleEditDatabases = () => {
     const language = languages.map((lang) => lang.value).join(", ");
     const framework = frameworks.map((framework) => framework.value).join(", ");
-    const url = `/experience?languages=${encodeURIComponent(
+    const url = `/databases?languages=${encodeURIComponent(
       language
     )}&frameworks=${encodeURIComponent(framework)}&dev=${dev}`;
     redirect(url);
@@ -469,10 +466,13 @@ const DevWorth = () => {
                 effect={"ringHover"}
                 className="mt-5 mb-8"
                 onClick={() =>
-                  redirect("https://github.com/umarmughalcodez/Stack-Worth")
+                  window.open(
+                    "https://github.com/umarmughalcodez/Stack-Worth",
+                    "_blank"
+                  )
                 }
               >
-                Drop a ⭐
+                Drop a <FaStar className="text-yellow-400 text-2xl" />
               </Button>
             </div>
           ) : (
@@ -492,15 +492,8 @@ const DevWorth = () => {
                       alt="Edit"
                       width={20}
                       height={20}
-                      className="svg"
-                    />
-                    <Image
-                      src={editGif}
-                      alt="Edit"
-                      width={20}
-                      height={20}
-                      className="gif"
                       onClick={() => redirect("/dev-type")}
+                      className="cursor-pointer"
                     />
                   </button>
                 </span>
@@ -515,15 +508,8 @@ const DevWorth = () => {
                       alt="Edit"
                       width={20}
                       height={20}
-                      className="svg"
-                    />
-                    <Image
-                      src={editGif}
-                      alt="Edit"
-                      width={20}
-                      height={20}
-                      className="gif"
                       onClick={handleEditExperience}
+                      className="cursor-pointer"
                     />
                   </button>
                 </span>
@@ -538,15 +524,8 @@ const DevWorth = () => {
                       alt="Edit"
                       width={20}
                       height={20}
-                      className="svg"
-                    />
-                    <Image
-                      src={editGif}
-                      alt="Edit"
-                      width={20}
-                      height={20}
-                      className="gif"
                       onClick={handleEditLanguages}
+                      className="cursor-pointer"
                     />
                   </button>
                 </span>
@@ -579,15 +558,8 @@ const DevWorth = () => {
                       alt="Edit"
                       width={20}
                       height={20}
-                      className="svg"
-                    />
-                    <Image
-                      src={editGif}
-                      alt="Edit"
-                      width={20}
-                      height={20}
-                      className="gif"
                       onClick={handleEditFrameworks}
+                      className="cursor-pointer"
                     />
                   </button>
                 </span>
@@ -625,14 +597,7 @@ const DevWorth = () => {
                       alt="Edit"
                       width={20}
                       height={20}
-                      className="svg"
-                    />
-                    <Image
-                      src={editGif}
-                      alt="Edit"
-                      width={20}
-                      height={20}
-                      className="gif"
+                      className="cursor-pointer"
                       onClick={handleEditDatabases}
                     />
                   </button>
@@ -660,9 +625,7 @@ const DevWorth = () => {
               <Button
                 onClick={calculateWorth}
                 className="mb-12 mt-3"
-                effect={"expandIcon"}
-                icon={ArrowRightIcon}
-                iconPlacement="right"
+                effect={"shineHover"}
               >
                 Calculate Your Developer Worth
               </Button>

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Users, User } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 
 interface OptionProps {

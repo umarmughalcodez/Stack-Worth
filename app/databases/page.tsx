@@ -2,7 +2,6 @@
 import Background from "@/components/animations/background";
 import { redirect, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import mysql from "@/public/icons8-mysql-logo.svg";
 import mysql1 from "@/public/mysql-original-wordmark.svg";
 import postgres from "@/public/postgresql-plain-wordmark.svg";
 import sqlite from "@/public/sqlite.svg";
@@ -13,9 +12,10 @@ import redis from "@/public/redis-original-wordmark.svg";
 import mariadb from "@/public/mariadb (1).svg";
 import firebase from "@/public/file-type-firebase.svg";
 import aws from "@/public/aws.svg";
-import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import CustomCheckbox from "@/components/CustomCheckbox";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
+import Loader from "@/components/Loader";
 
 const options = [
   {
@@ -84,6 +84,7 @@ const databases = () => {
     .getAll("frameworks")
     .flatMap((framework) => framework.split(", "));
   const dev = searchParams.get("dev");
+  const [loading, setLoading] = useState(true);
 
   const handleRedirect = () => {
     let language = languages.join(", ");
@@ -98,31 +99,41 @@ const databases = () => {
     redirect(url);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       <Background />
-      <div className="h-full w-[90%] flex flex-col items-center justify-center z-10 relative mt-24">
-        <p className="mt-4 font-semibold text-2xl mb-10">
-          Select Your Databases
-        </p>
-        <CustomCheckbox
-          options={options}
-          selectedOptions={selectedDatabases}
-          onChange={setSelectedDatabases}
-        />
-        <Button
-          disabled={selectedDatabases.length <= 0}
-          className="mt-10 mb-12"
-          effect={"expandIcon"}
-          icon={ArrowRightIcon}
-          iconPlacement="right"
-          onClick={handleRedirect}
-        >
-          {selectedDatabases.length <= 0
-            ? "Please select at least one database"
-            : "Next"}
-        </Button>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="h-full w-[90%] flex flex-col items-center justify-center z-10 relative mt-24">
+          <p className="mt-4 font-semibold text-2xl mb-10">
+            Select Your Databases
+          </p>
+          <CustomCheckbox
+            options={options}
+            selectedOptions={selectedDatabases}
+            onChange={setSelectedDatabases}
+          />
+          <Button
+            disabled={selectedDatabases.length <= 0}
+            className="mt-10 mb-12"
+            effect={"expandIcon"}
+            icon={ArrowRightIcon}
+            iconPlacement="right"
+            onClick={handleRedirect}
+          >
+            {selectedDatabases.length <= 0
+              ? "Please select at least one database"
+              : "Next"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

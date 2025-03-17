@@ -18,7 +18,7 @@ import java from "@/public/icons8-java-logo.svg";
 import ruby from "@/public/icons8-ruby-programming-language.svg";
 import go from "@/public/icons8-go-logo.svg";
 import rust from "@/public/rust.svg";
-import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import CustomCheckbox from "@/components/CustomCheckbox";
 import Loader from "@/components/Loader";
 import { ArrowRightIcon } from "lucide-react";
 
@@ -55,7 +55,7 @@ const FullStack = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   const handleRedirect = () => {
@@ -156,12 +156,12 @@ const FullStack = () => {
             effect={"expandIcon"}
             icon={ArrowRightIcon}
             iconPlacement="right"
-            disabled={selectedLanguages.length <= 1}
+            disabled={selectedLanguages.length < 1}
             onClick={handleRedirect}
             className="mt-10 mb-12"
           >
-            {selectedLanguages.length <= 1
-              ? "Please select at least two languages"
+            {selectedLanguages.length < 1
+              ? "Please select at least 2 languages"
               : "Next"}
           </Button>
         </div>

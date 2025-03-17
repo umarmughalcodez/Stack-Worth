@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { redirect, useSearchParams } from "next/navigation";
@@ -31,7 +30,7 @@ import bootstrap from "@/public/icons8-bootstrap.svg";
 import express from "@/public/icons8-express-js.svg";
 import flask from "@/public/icons8-flask.svg";
 import flutter from "@/public/flutter.svg";
-import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import CustomCheckbox from "@/components/CustomCheckbox";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
 
@@ -131,7 +130,9 @@ const Frameworks = () => {
   };
 
   useEffect(() => {
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, []);
 
   return (
@@ -146,9 +147,9 @@ const Frameworks = () => {
           </p>
 
           {dev === "full-stack" && (
-            <div className="w-[90%] h-auto flex">
+            <div className="w-[90%] h-auto flex text-center">
               <div className="w-[50%] flex flex-col items-center">
-                <p className="text-xl font-semibold mt-10 mb-5">
+                <p className="text-xl font-semibold mt-10 mb-8">
                   Select Front End Frameworks
                 </p>
                 <CustomCheckbox
@@ -164,7 +165,7 @@ const Frameworks = () => {
               </div>
 
               <div className="w-[50%] flex flex-col items-center">
-                <p className="text-xl font-semibold mt-10 mb-5">
+                <p className="text-xl font-semibold mt-10 mb-8">
                   Select Back End Frameworks
                 </p>
 

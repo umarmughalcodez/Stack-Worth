@@ -1,6 +1,6 @@
 "use client";
 import Background from "@/components/animations/background";
-import GroupSizeSelector from "@/components/animations/CustomCheckbox";
+import GroupSizeSelector from "@/components/CustomCheckbox";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -9,8 +9,6 @@ import css from "@/public/icons8-css-logo.svg";
 import js from "@/public/icons8-javascript.svg";
 import ts from "@/public/icons8-typescript.svg";
 import { ArrowRightIcon } from "lucide-react";
-import loader from "@/public/loading.gif";
-import Image from "next/image";
 import Loader from "@/components/Loader";
 
 const options = [
@@ -27,7 +25,7 @@ const FrontEnd = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   const handleRedirect = () => {

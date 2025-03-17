@@ -1,10 +1,4 @@
 "use client";
-import Image from "next/image";
-import React from "react";
-import money1 from "@/public/money-with-wings.svg";
-import programmer from "@/public/programmer (1).png";
-import demo from "@/public/smiling-face-with-sunglasses.svg";
-import money from "@/public/money-with-wings (1).svg";
 import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";

@@ -13,7 +13,7 @@ import java from "@/public/icons8-java-logo.svg";
 import ruby from "@/public/icons8-ruby-programming-language.svg";
 import go1 from "@/public/icons8-go-logo.svg";
 import rust from "@/public/rust.svg";
-import CustomCheckbox from "@/components/animations/CustomCheckbox";
+import CustomCheckbox from "@/components/CustomCheckbox";
 import Loader from "@/components/Loader";
 import { ArrowRightIcon } from "lucide-react";
 
@@ -52,7 +52,7 @@ const BackEnd = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   return (
