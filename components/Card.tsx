@@ -5,12 +5,12 @@ import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import githubUsername from "github-username";
 import money1 from "@/public/money-with-wings.svg";
-import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
 import { Button } from "./ui/button";
 import { SiWhatsapp } from "react-icons/si";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaImage } from "react-icons/fa6";
+import RatingComponent from "./Ratings";
 
 interface CardProps {
   worthMsg: string;
@@ -20,7 +20,6 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
-  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [gitHubUsername, setGitHubUsername] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -112,7 +111,7 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
       <p className="text-lg mb-4 mt-2">
         <span className="text-green-500 font-semibold">Pro Tip:</span> {tip}
       </p>
-      {/* {showPopup && <Ratings />} */}
+      {showPopup && <RatingComponent />}
 
       <div className="mt-4 flex space-x-4 buttons-hidden">
         <Button

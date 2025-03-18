@@ -59,7 +59,6 @@ export default function RatingComponent() {
             </div>
             <textarea
               className="w-full p-2 border rounded-md mt-4 outline-none resize-none"
-              aria-expanded={false}
               rows={3}
               placeholder="Write your feedback..."
               value={feedback}

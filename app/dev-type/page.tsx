@@ -3,11 +3,11 @@ import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import monitor from "@/public/monitor-one.svg";
 import server from "@/public/computer-computers-servers-electronics-technology.svg";
 import globe from "@/public/globe-with-meridians.svg";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Loader from "@/components/Loader";
 
 const options = [
@@ -89,6 +89,12 @@ const DeveloperType = () => {
       redirect("/back-end");
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
 
   return (
     <div>

@@ -1,9 +1,22 @@
 "use client";
+import { User } from "@/types/User";
 import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getSession } from "next-auth/react";
 
 const Guide = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const session = await getSession();
+      setUser(session?.user as User);
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="w-full h-auto min-h-[500px] flex bg-green-200 mt-12 flex-col items-center justify-center p-5 bg-opacity-50 rounded-2xl">
       <p className="text-4xl font-bold mb-12">How it Works?</p>
@@ -27,16 +40,29 @@ const Guide = () => {
           trends, helping you understand your earning potential
         </p>
       </div>
-      <Button
-        effect={"expandIcon"}
-        icon={ArrowRightIcon}
-        iconPlacement="right"
-        onClick={() => {
-          redirect("/dev-type");
-        }}
-      >
-        Let's Check!
-      </Button>
+      {user?.email ? (
+        <Button
+          effect={"expandIcon"}
+          icon={ArrowRightIcon}
+          iconPlacement="right"
+          onClick={() => {
+            redirect("/dev-type");
+          }}
+        >
+          Let&apos;s Check!
+        </Button>
+      ) : (
+        <Button
+          effect={"expandIcon"}
+          icon={ArrowRightIcon}
+          iconPlacement="right"
+          onClick={() => {
+            redirect("/dev-type");
+          }}
+        >
+          Connect GitHub First!
+        </Button>
+      )}
     </div>
   );
 };

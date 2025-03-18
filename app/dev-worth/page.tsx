@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import Loader from "@/components/Loader";
 import Image, { StaticImageData } from "next/image";
-import { redirect, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { redirect } from "next/navigation";
+import React, { useState, useEffect, useMemo } from "react";
 import html from "@/public/icons8-html-5.svg";
 import css from "@/public/icons8-css-logo.svg";
 import js from "@/public/icons8-javascript.svg";
@@ -75,7 +75,6 @@ interface OptionProps {
 const DevWorth = () => {
   const [showCard, setShowCard] = useState(false);
   const [worth, setWorth] = useState<number>(0);
-  const searchParams = useSearchParams();
   const [languages, setLanguages] = useState<OptionProps[]>([]);
   const [frameworks, setFrameworks] = useState<OptionProps[]>([]);
   const [databases, setDatabases] = useState<OptionProps[]>([]);
@@ -83,183 +82,190 @@ const DevWorth = () => {
   const [exp, setExp] = useState<string>("0 - 1");
   const [loading, setLoading] = useState(true);
 
-  const languageOptions: OptionProps[] = [
-    { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
-    { value: "css", label: "CSS", icon: css, bg: "bg-blue-200" },
-    { value: "js", label: "JavaScript", icon: js, bg: "bg-yellow-200" },
-    { value: "ts", label: "TypeScript", icon: ts, bg: "bg-blue-200" },
-    { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
-    { value: "c", label: "C", icon: c, bg: "bg-blue-200" },
-    { value: "c++", label: "C++", icon: cplus, bg: "bg-blue-300" },
-    { value: "c#", label: "C#", icon: csharp, bg: "bg-purple-300" },
-    {
-      value: "nodejs",
-      label: "Nodejs",
-      icon: nodejs,
-      bg: "bg-green-300",
-      size: "65",
-    },
-    { value: "php", label: "PHP", icon: php, bg: "bg-purple-300" },
-    { value: "java", label: "Java", icon: java, bg: "bg-blue-200", size: "65" },
-    { value: "ruby", label: "Ruby", icon: ruby, bg: "bg-red-200" },
-    { value: "go", label: "Go", icon: go, bg: "bg-blue-300" },
-    { value: "rust", label: "Rust", icon: rust, bg: "bg-red-200" },
-  ];
+  const languageOptions: OptionProps[] = useMemo(
+    () => [
+      { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
+      { value: "css", label: "CSS", icon: css, bg: "bg-blue-200" },
+      { value: "js", label: "JavaScript", icon: js, bg: "bg-yellow-200" },
+      { value: "ts", label: "TypeScript", icon: ts, bg: "bg-blue-200" },
+      { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
+      { value: "c", label: "C", icon: c, bg: "bg-blue-200" },
+      { value: "c++", label: "C++", icon: cplus, bg: "bg-blue-300" },
+      { value: "c#", label: "C#", icon: csharp, bg: "bg-purple-300" },
+      {
+        value: "nodejs",
+        label: "Nodejs",
+        icon: nodejs,
+        bg: "bg-green-300",
+        size: "65",
+      },
+      { value: "php", label: "PHP", icon: php, bg: "bg-purple-300" },
+      {
+        value: "java",
+        label: "Java",
+        icon: java,
+        bg: "bg-blue-200",
+        size: "65",
+      },
+      { value: "ruby", label: "Ruby", icon: ruby, bg: "bg-red-200" },
+      { value: "go", label: "Go", icon: go, bg: "bg-blue-300" },
+      { value: "rust", label: "Rust", icon: rust, bg: "bg-red-200" },
+    ],
+    []
+  );
 
-  const frameworkOptions: OptionProps[] = [
-    { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
-    {
-      value: "reactNative",
-      label: "React Native",
-      icon: reactNative,
-      bg: "bg-sky-200",
-    },
-    {
-      value: "flutter",
-      label: "Flutter",
-      icon: flutter,
-      bg: "bg-blue-200",
-    },
-    { value: "nextjs", label: "Next", icon: nextjs, bg: "bg-gray-200" },
-    {
-      value: "bootstrap",
-      label: "Bootstrap",
-      icon: bootstrap,
-      bg: "bg-purple-300",
-    },
-    {
-      value: "tailwindcss",
-      label: "Tailwind CSS",
-      icon: tailwind,
-      bg: "bg-blue-200",
-    },
+  const frameworkOptions: OptionProps[] = useMemo(
+    () => [
+      { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
+      { value: "nextjs", label: "Next", icon: nextjs, bg: "bg-gray-200" },
+      {
+        value: "reactNative",
+        label: "React Native",
+        icon: reactNative,
+        bg: "bg-sky-200",
+      },
+      { value: "angular", label: "Angular", icon: angular1, bg: "bg-red-200" },
+      {
+        value: "bootstrap",
+        label: "Bootstrap",
+        icon: bootstrap,
+        bg: "bg-purple-300",
+      },
+      {
+        value: "tailwindcss",
+        label: "Tailwind CSS",
+        icon: tailwind,
+        bg: "bg-blue-200",
+      },
+      { value: "unity", label: "Unity", icon: unity, bg: "bg-slate-200" },
+      { value: "quarkus", label: "Quarkus", icon: quarkus, bg: "bg-gray-200" },
 
-    { value: "angular", label: "Angular", icon: angular1, bg: "bg-red-200" },
-    { value: "vue", label: "Vue", icon: vue, bg: "bg-green-200" },
-    { value: "svelte", label: "Svelte", icon: svelte1, bg: "bg-orange-200" },
-    { value: "jquery", label: "JQuery", icon: jquery, bg: "bg-gray-200" },
-    {
-      value: "flask",
-      label: "Flask",
-      icon: flask,
-      bg: "bg-slate-200",
-      size: "65",
-    },
-    { value: "nestjs", label: "Nest", icon: nestjs, bg: "bg-pink-200" },
+      { value: "libuv", label: "Libuv", icon: libuv, bg: "bg-gray-200" },
 
-    { value: "express", label: "Express", icon: express, bg: "bg-green-200" },
-    { value: "net", label: ".Net", icon: net, bg: "bg-blue-200" },
-    { value: "gin", label: "Gin", icon: gin, bg: "bg-yellow-200" },
-    { value: "fiber", label: "Fiber", icon: fiber, bg: "bg-blue-200" },
-    { value: "django", label: "Django", icon: django, bg: "bg-green-200" },
-    { value: "sinatra", label: "Sinatra", icon: sinatra, bg: "bg-gray-200" },
-    { value: "rocket", label: "Rocket", icon: rocket, bg: "bg-red-200" },
-    { value: "quarkus", label: "Quarkus", icon: quarkus, bg: "bg-gray-200" },
-    { value: "libuv", label: "Libuv", icon: libuv, bg: "bg-gray-200" },
-    { value: "laravel", label: "Laravel", icon: laravel, bg: "bg-red-200" },
-    { value: "unreal", label: "Unreal", icon: unreal, bg: "bg-slate-200" },
-    { value: "unity", label: "Unity", icon: unity, bg: "bg-slate-200" },
-    {
-      value: "springboot",
-      label: "Springboot",
-      icon: springboot,
-      bg: "bg-green-200",
-    },
-    {
-      value: "rubyonrails",
-      label: "Rubyonrails",
-      icon: rubyonrails,
-      bg: "bg-red-200",
-    },
-    { value: "qt", label: "QT", icon: qt, bg: "bg-slate-200" },
-  ];
+      { value: "unreal", label: "Unreal", icon: unreal, bg: "bg-slate-200" },
+      { value: "sinatra", label: "Sinatra", icon: sinatra, bg: "bg-gray-200" },
+      {
+        value: "rubyonrails",
+        label: "Rubyonrails",
+        icon: rubyonrails,
+        bg: "bg-red-200",
+      },
+      { value: "qt", label: "QT", icon: qt, bg: "bg-slate-200" },
+      { value: "gin", label: "Gin", icon: gin, bg: "bg-yellow-200" },
+      { value: "fiber", label: "Fiber", icon: fiber, bg: "bg-blue-200" },
+      { value: "flutter", label: "Flutter", icon: flutter, bg: "bg-blue-200" },
+      { value: "vue", label: "Vue", icon: vue, bg: "bg-green-200" },
+      { value: "svelte", label: "Svelte", icon: svelte1, bg: "bg-orange-200" },
+      { value: "jquery", label: "JQuery", icon: jquery, bg: "bg-gray-200" },
+      {
+        value: "flask",
+        label: "Flask",
+        icon: flask,
+        bg: "bg-slate-200",
+        size: "65",
+      },
+      { value: "nestjs", label: "Nest", icon: nestjs, bg: "bg-pink-200" },
+      { value: "express", label: "Express", icon: express, bg: "bg-green-200" },
+      { value: "net", label: ".Net", icon: net, bg: "bg-blue-200" },
+      { value: "django", label: "Django", icon: django, bg: "bg-green-200" },
+      { value: "laravel", label: "Laravel", icon: laravel, bg: "bg-red-200" },
+      {
+        value: "springboot",
+        label: "Springboot",
+        icon: springboot,
+        bg: "bg-green-200",
+      },
+    ],
+    []
+  );
 
-  const databaseOptions: OptionProps[] = [
-    {
-      value: "mysql",
-      label: "MySQL",
-      icon: mysql1,
-      bg: "bg-orange-200",
-      size: "60",
-    },
-    {
-      value: "postgresql",
-      label: "PostgreSQL",
-      icon: postgres,
-      bg: "bg-blue-200",
-    },
-    {
-      value: "sqlite",
-      label: "SQLite",
-      icon: sqlite,
-      bg: "bg-blue-200",
-      size: "65",
-    },
-    { value: "mongodb", label: "MongoDB", icon: mongodb, bg: "bg-green-200" },
-    {
-      value: "microsoftsql",
-      label: "Microsoft SQL Server",
-      icon: sqlServer,
-      bg: "bg-slate-200",
-    },
-    {
-      value: "aws",
-      label: "AWS (Amazon Web Services)",
-      icon: aws,
-      bg: "bg-orange-200",
-    },
-    {
-      value: "oracle",
-      label: "Oracle",
-      icon: oracle,
-      bg: "bg-orange-200",
-      size: "60",
-    },
-    { value: "redis", label: "Redis", icon: redis, bg: "bg-red-200" },
-    {
-      value: "mariadb",
-      label: "MariaDB",
-      icon: mariadb,
-      bg: "bg-amber-200",
-      size: "85",
-    },
-    {
-      value: "firebase",
-      label: "Firebase Realtime Database",
-      icon: firebase,
-      bg: "bg-yellow-200",
-    },
-  ];
+  const databaseOptions: OptionProps[] = useMemo(
+    () => [
+      {
+        value: "mysql",
+        label: "MySQL",
+        icon: mysql1,
+        bg: "bg-orange-200",
+        size: "60",
+      },
+      {
+        value: "postgresql",
+        label: "PostgreSQL",
+        icon: postgres,
+        bg: "bg-blue-200",
+      },
+      {
+        value: "sqlite",
+        label: "SQLite",
+        icon: sqlite,
+        bg: "bg-blue-200",
+        size: "65",
+      },
+      { value: "mongodb", label: "MongoDB", icon: mongodb, bg: "bg-green-200" },
+      {
+        value: "microsoftsql",
+        label: "Microsoft SQL Server",
+        icon: sqlServer,
+        bg: "bg-slate-200",
+      },
+      {
+        value: "aws",
+        label: "AWS (Amazon Web Services)",
+        icon: aws,
+        bg: "bg-orange-200",
+      },
+      {
+        value: "oracle",
+        label: "Oracle",
+        icon: oracle,
+        bg: "bg-orange-200",
+        size: "60",
+      },
+      { value: "redis", label: "Redis", icon: redis, bg: "bg-red-200" },
+      {
+        value: "mariadb",
+        label: "MariaDB",
+        icon: mariadb,
+        bg: "bg-amber-200",
+        size: "85",
+      },
+      {
+        value: "firebase",
+        label: "Firebase Realtime Database",
+        icon: firebase,
+        bg: "bg-yellow-200",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
-    const selectedLanguages = searchParams
-      .getAll("l")
-      .flatMap((lang) => lang.split(", "));
-    const selectedFrameworks = searchParams
-      .getAll("f")
-      .flatMap((framework) => framework.split(", "));
-    const selectedDatabases = searchParams
-      .getAll("d")
-      .flatMap((database) => database.split(", "));
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
 
-    setLanguages(
-      languageOptions.filter((option) =>
-        selectedLanguages.includes(option.value)
-      )
-    );
-    setFrameworks(
-      frameworkOptions.filter((option) =>
-        selectedFrameworks.includes(option.value)
-      )
-    );
-    setDatabases(
-      databaseOptions.filter((option) =>
-        selectedDatabases.includes(option.value)
-      )
-    );
-    setDev(searchParams.get("dev") || "unknown");
-    setExp(searchParams.get("exp") || "0 - 1");
-  }, [searchParams]);
+      const selectedLanguages = params.get("l")?.split(", ") || [];
+      const selectedFrameworks = params.get("f")?.split(", ") || [];
+      const selectedDatabases = params.get("d")?.split(", ") || [];
+
+      setLanguages(
+        languageOptions.filter((option) =>
+          selectedLanguages.includes(option.value)
+        )
+      );
+      setFrameworks(
+        frameworkOptions.filter((option) =>
+          selectedFrameworks.includes(option.value)
+        )
+      );
+      setDatabases(
+        databaseOptions.filter((option) =>
+          selectedDatabases.includes(option.value)
+        )
+      );
+      setDev(params.get("dev") || "unknown");
+      setExp(params.get("exp") || "0 - 1");
+    }
+  }, [languageOptions, databaseOptions, frameworkOptions]);
 
   const calculateWorth = () => {
     setLoading(true);
@@ -268,19 +274,19 @@ const DevWorth = () => {
 
       // Average salaries for programming languages (in USD)
       const languageSalaries: Record<string, number> = {
-        html: 12000,
-        css: 25000,
-        python: 124000,
+        html: 60000,
+        css: 65000,
+        python: 112382, // :contentReference[oaicite:0]{index=0}
         js: 120000,
         java: 120000,
         c: 125000,
         ruby: 130000,
         php: 71000,
         "c#": 112000,
-        "c++": 112000,
+        "c++": 128849, // :contentReference[oaicite:1]{index=1}
         go: 115000,
-        rust: 112000,
-        ts: 125000,
+        rust: 130000,
+        ts: 131956, // :contentReference[oaicite:2]{index=2}
         nodejs: 130000,
       };
 
@@ -313,8 +319,9 @@ const DevWorth = () => {
         none: 1000,
       };
 
+      // Average salaries for databases (in USD)
       const databaseSalaries: Record<string, number> = {
-        mysql: 12000,
+        mysql: 120000,
         postgresql: 125000,
         sqlite: 100000,
         mongodb: 120000,
@@ -356,6 +363,7 @@ const DevWorth = () => {
         }
       });
 
+      // Calculate total worth based on databases
       databases.forEach((database) => {
         if (databaseSalaries[database.value]) {
           totalWorth += databaseSalaries[database.value];
@@ -386,7 +394,7 @@ const DevWorth = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 3000);
   }, []);
 
   const handleEditFrameworks = () => {

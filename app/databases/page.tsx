@@ -1,6 +1,6 @@
 "use client";
 import Background from "@/components/animations/background";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import mysql1 from "@/public/mysql-original-wordmark.svg";
 import postgres from "@/public/postgresql-plain-wordmark.svg";
@@ -74,22 +74,29 @@ const options = [
   },
 ];
 
-const databases = () => {
+const Databases = () => {
   const [selectedDatabases, setSelectedDatabases] = useState<string[]>([]);
-  const searchParams = useSearchParams();
-  const languages = searchParams
-    .getAll("languages")
-    .flatMap((lang) => lang.split(", "));
-  const frameworks = searchParams
-    .getAll("frameworks")
-    .flatMap((framework) => framework.split(", "));
-  const dev = searchParams.get("dev");
+
   const [loading, setLoading] = useState(true);
 
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [frameworks, setFrameworks] = useState<string[]>([]);
+  const [dev, setDev] = useState<string | null>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+
+      setLanguages(params.get("languages")?.split(", ") || []);
+      setFrameworks(params.get("frameworks")?.split(", ") || []);
+      setDev(params.get("dev") || null);
+    }
+  }, []);
+
   const handleRedirect = () => {
-    let language = languages.join(", ");
-    let framework = frameworks.join(", ");
-    let databases = selectedDatabases.join(", ");
+    const language = languages.join(", ");
+    const framework = frameworks.join(", ");
+    const databases = selectedDatabases.join(", ");
     const url = `/experience?languages=${encodeURIComponent(
       language
     )}&frameworks=${encodeURIComponent(
@@ -138,4 +145,4 @@ const databases = () => {
   );
 };
 
-export default databases;
+export default Databases;

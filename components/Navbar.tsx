@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { redirect } from "next/navigation";
-import { getSession, signIn, signOut } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import logo from "@/public/logo.png";
 import Image from "next/image";
@@ -30,7 +30,7 @@ const Navbar = () => {
   }, []);
 
   const handleBack = () => {
-    let storedPaths = JSON.parse(localStorage.getItem("history") || "[]");
+    const storedPaths = JSON.parse(localStorage.getItem("history") || "[]");
 
     if (storedPaths.length > 1) {
       storedPaths.pop(); // Remove current path
@@ -56,10 +56,14 @@ const Navbar = () => {
     fetchUser();
   }, []);
 
+  if (history) {
+    console.log("History is Empty!");
+  }
+
   return (
     <div className=" h-24 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
       {pathname === "/" ? null : (
-        <span className="absolute top-9 left-16 text-black text-xl flex items-center justify-center">
+        <span className="absolute top-10 left-20 text-black text-xl flex items-center justify-center">
           <IoIosArrowBack />
           <Button
             effect={"hoverUnderline"}

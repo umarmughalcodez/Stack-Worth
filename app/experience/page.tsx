@@ -2,7 +2,7 @@
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import beginner from "@/public/smiling-face-with-halo (1).svg";
 import intermediate from "@/public/smiling-face-with-sunglasses.svg";
@@ -12,19 +12,18 @@ import master from "@/public/skull.svg";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
 
-const experience = () => {
+const Experience = () => {
   const [selectedExp, setSelectedExp] = useState<string>("");
-  const searchParams = useSearchParams();
-  const languages = searchParams
-    .getAll("languages")
-    .flatMap((lang) => lang.split(", "));
-  const frameworks = searchParams
-    .getAll("frameworks")
-    .flatMap((framework) => framework.split(", "));
-  const databases = searchParams
-    .getAll("databases")
-    .flatMap((database) => database.split(", "));
-  const dev = searchParams.get("dev");
+  // const languages = searchParams
+  //   .getAll("languages")
+  //   .flatMap((lang) => lang.split(", "));
+  // const frameworks = searchParams
+  //   .getAll("frameworks")
+  //   .flatMap((framework) => framework.split(", "));
+  // const databases = searchParams
+  //   .getAll("databases")
+  //   .flatMap((database) => database.split(", "));
+  // const dev = searchParams.get("dev");
   const [loading, setLoading] = useState(true);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,10 +31,26 @@ const experience = () => {
     setSelectedExp(value);
   };
 
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [frameworks, setFrameworks] = useState<string[]>([]);
+  const [dev, setDev] = useState<string | null>("");
+  const [databases, setDatabases] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+
+      setLanguages(params.get("languages")?.split(", ") || []);
+      setFrameworks(params.get("frameworks")?.split(", ") || []);
+      setDatabases(params.get("databases")?.split(", ") || []);
+      setDev(params.get("dev") || null);
+    }
+  }, []);
+
   const handleRedirect = () => {
-    let language = languages.join(", ");
-    let framework = frameworks.join(", ");
-    let database = databases.join(", ");
+    const language = languages.join(", ");
+    const framework = frameworks.join(", ");
+    const database = databases.join(", ");
     const url = `/dev-worth?l=${encodeURIComponent(
       language
     )}&f=${encodeURIComponent(framework)}&d=${encodeURIComponent(
@@ -240,4 +255,4 @@ const experience = () => {
   );
 };
 
-export default experience;
+export default Experience;

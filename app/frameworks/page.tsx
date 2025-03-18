@@ -1,7 +1,7 @@
 "use client";
 import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import react from "@/public/icons8-react-native.svg";
 import nestjs from "@/public/icons8-nestjs.svg";
@@ -106,17 +106,23 @@ const backEndOptions = [
 ];
 
 const Frameworks = () => {
-  const searchParams = useSearchParams();
-  const languages = searchParams
-    .getAll("languages")
-    .flatMap((lang) => lang.split(", "));
-  const dev = searchParams.get("dev");
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [dev, setDev] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+
+      setLanguages(params.get("languages")?.split(", ") || []);
+      setDev(params.get("dev") || null);
+    }
+  }, []);
 
   const [loading, setLoading] = useState(true);
   const [selectedFrameworks, setselectedFrameworks] = useState<string[]>([]);
 
   const handleRedirect = () => {
-    let language = languages.join(", ");
+    const language = languages.join(", ");
     let frameworks = selectedFrameworks.join(", ");
 
     if (selectedFrameworks.length <= 0) {
