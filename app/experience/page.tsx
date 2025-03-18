@@ -14,16 +14,6 @@ import Loader from "@/components/Loader";
 
 const Experience = () => {
   const [selectedExp, setSelectedExp] = useState<string>("");
-  // const languages = searchParams
-  //   .getAll("languages")
-  //   .flatMap((lang) => lang.split(", "));
-  // const frameworks = searchParams
-  //   .getAll("frameworks")
-  //   .flatMap((framework) => framework.split(", "));
-  // const databases = searchParams
-  //   .getAll("databases")
-  //   .flatMap((database) => database.split(", "));
-  // const dev = searchParams.get("dev");
   const [loading, setLoading] = useState(true);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

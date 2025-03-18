@@ -10,9 +10,11 @@ import LiveScrollCards from "./LiveScrollCards";
 import DemoCard from "./DemoCard";
 import Guide from "./Guide";
 import Reason from "./Reason";
+import Loader from "./Loader";
 
 const Homepage = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,58 +22,65 @@ const Homepage = () => {
       setUser(session?.user as User);
     };
     fetchUser();
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   }, []);
 
   return (
-    <div className="">
+    <div>
       <Background />
-      <div className="h-full w-full flex flex-col items-center z-10 relative text-2xl">
-        <div className="grid place-items-center mt-24 mb-24 space-y-16">
-          <div className="grid place-items-center space-y-8">
-            <p className="font-semibold text-3xl">
-              Find Out Your Developer Worth!
-            </p>
-            <p className="w-[90%] leading-6 text-center text-lg">
-              Select your Tech Stack, Skills & Experience to see how much you
-              can earn as a developer
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="h-full w-full flex flex-col items-center z-10 relative text-2xl">
+          <div className="grid place-items-center mt-24 mb-24 space-y-16">
+            <div className="grid place-items-center space-y-8">
+              <p className="font-semibold text-3xl">
+                Find Out Your Developer Worth!
+              </p>
+              <p className="w-[90%] leading-6 text-center text-lg">
+                Select your Tech Stack, Skills & Experience to see how much you
+                can earn as a developer
+              </p>
+            </div>
+            <p className="font-semibold w-[90%] leading-9 text-center">
+              <span className="text-white text-3xl bg-green-400 rounded-2xl px-3 py-1">
+                5,000+
+              </span>{" "}
+              Developers have calculated their worth this month
             </p>
           </div>
-          <p className="font-semibold w-[90%] leading-9 text-center">
-            <span className="text-white text-3xl bg-green-400 rounded-2xl px-3 py-1">
-              5,000+
-            </span>{" "}
-            Developers have calculated their worth this month
-          </p>
+          <div className="grid place-items-center">
+            {user?.name ? (
+              <Button
+                effect={"expandIcon"}
+                icon={ArrowRightIcon}
+                iconPlacement="right"
+                onClick={() => {
+                  redirect("/dev-type");
+                }}
+              >
+                Calculate Your Worth!
+              </Button>
+            ) : (
+              <>
+                <p className="text-lg font-normal">
+                  Please connect your GitHub account first!
+                </p>
+              </>
+            )}
+            <span className="text-3xl font-bold mt-28 w-[85%] text-center">
+              What <span className="text-green-400">Developers</span> and{" "}
+              <span className="text-green-400">People</span> Say About Us!
+            </span>
+            <LiveScrollCards />
+            <Guide />
+            <DemoCard />
+            <Reason />
+          </div>
         </div>
-        <div className="grid place-items-center">
-          {user?.name ? (
-            <Button
-              effect={"expandIcon"}
-              icon={ArrowRightIcon}
-              iconPlacement="right"
-              onClick={() => {
-                redirect("/dev-type");
-              }}
-            >
-              Calculate Your Worth!
-            </Button>
-          ) : (
-            <>
-              <p className="text-lg font-normal">
-                Please connect your GitHub account first!
-              </p>
-            </>
-          )}
-          <span className="text-3xl font-bold mt-28 w-[85%] text-center">
-            What <span className="text-green-400">Developers</span> and{" "}
-            <span className="text-green-400">People</span> Say About Us!
-          </span>
-          <LiveScrollCards />
-          <Guide />
-          <DemoCard />
-          <Reason />
-        </div>
-      </div>
+      )}
     </div>
   );
 };
