@@ -148,7 +148,7 @@ const Frameworks = () => {
         <Loader />
       ) : (
         <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-20">
-          <p className="text-3xl font-semibold">
+          <p className="text-3xl font-semibold text-center">
             Select Frameworks & Libraries
           </p>
 

@@ -135,15 +135,19 @@ const FullStack = () => {
           <Toaster />
           <div className=" w-[95%] h-auto flex">
             <div className="w-[50%] h-full  flex flex-col items-center justify-center">
-              <p className="mb-5 text-xl">Front End Languages</p>
+              <p className="mb-5 text-xl break-words w-[80%] text-center">
+                Front End Languages
+              </p>
               <CustomCheckbox
                 selectedOptions={selectedLanguages}
                 onChange={setselectedLanguages}
                 options={frontEndOptions}
               />
             </div>
-            <div className="w-[50%] h-full  flex flex-col items-center justify-center">
-              <p className="mb-5 text-xl">Back End Languages</p>
+            <div className="w-[50%] h-full  flex flex-col items-center justify-center ">
+              <p className="mb-5 text-xl  break-words w-[80%] text-center">
+                Back End Languages
+              </p>
               <CustomCheckbox
                 selectedOptions={selectedLanguages}
                 onChange={setselectedLanguages}

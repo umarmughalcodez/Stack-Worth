@@ -62,7 +62,7 @@ const Experience = () => {
         <Loader />
       ) : (
         <div className="h-full w-full flex flex-col items-center justify-center z-10 relative mt-24">
-          <p className="mt-10 mb-10 text-2xl font-semibold text-center">
+          <p className="mt-10 mb-10 text-2xl font-semibold text-center w-[85%]">
             Select your Years of Experience in this field
           </p>
           <div className="ml-10">

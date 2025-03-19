@@ -36,10 +36,10 @@ const Homepage = () => {
         <div className="h-full w-full flex flex-col items-center z-10 relative text-2xl">
           <div className="grid place-items-center mt-24 mb-24 space-y-16">
             <div className="grid place-items-center space-y-8">
-              <p className="font-semibold text-3xl">
+              <p className="font-semibold text-3xl text-center w-[85%]">
                 Find Out Your Developer Worth!
               </p>
-              <p className="w-[90%] leading-6 text-center text-lg">
+              <p className="w-[80%] leading-6 text-center text-lg">
                 Select your Tech Stack, Skills & Experience to see how much you
                 can earn as a developer
               </p>

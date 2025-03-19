@@ -63,13 +63,13 @@ const Navbar = () => {
   return (
     <div className=" h-24 w-full flex flex-col items-center justify-center z-[100] relative overflow-hidden">
       {pathname === "/" ? null : (
-        <span className="absolute top-10 left-20 text-black text-xl flex items-center justify-center">
+        <span className="absolute top-5 sm:top-8 left-5 sm:left-20 text-black flex items-center justify-center text-sm sm:text-xl">
           <IoIosArrowBack />
           <Button
             effect={"hoverUnderline"}
             variant={"link"}
             onClick={handleBack}
-            className="m-0 p-1 text-lg"
+            className="m-0 p-1 text-sm sm:text-lg"
           >
             Back
           </Button>
@@ -86,7 +86,7 @@ const Navbar = () => {
       />
 
       {user?.name ? (
-        <button className="edit-button absolute top-5 right-14">
+        <button className="edit-button absolute top-5 sm:top-5 right-5 sm:right-14">
           <Image
             src={github_static}
             alt="Github"
@@ -122,11 +122,12 @@ const Navbar = () => {
           effect="expandIcon"
           icon={FaGithub}
           iconPlacement="left"
-          className="absolute top-5 right-10 text-sm z-10 bg-none"
-          // size={"sm"}
+          className="absolute top-7 sm:top-7 right-5 sm:right-10 text-xs sm:text-sm z-10 bg-none"
+          // size={"icon"}
           onClick={connectGithub}
         >
-          Connect GitHub
+          <span className="hidden sm:inline">Connect GitHub</span>
+          <span className="sm:hidden">GitHub</span>
         </Button>
       )}
     </div>
