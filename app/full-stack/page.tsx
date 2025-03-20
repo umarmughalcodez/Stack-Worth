@@ -21,6 +21,7 @@ import rust from "@/public/rust.svg";
 import CustomCheckbox from "@/components/CustomCheckbox";
 import Loader from "@/components/Loader";
 import { ArrowRightIcon } from "lucide-react";
+import Assistant from "@/components/Assistant";
 
 const frontEndOptions = [
   { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
@@ -170,6 +171,7 @@ const FullStack = () => {
           </Button>
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

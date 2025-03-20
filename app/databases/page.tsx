@@ -16,6 +16,7 @@ import CustomCheckbox from "@/components/CustomCheckbox";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
+import Assistant from "@/components/Assistant";
 
 const options = [
   {
@@ -141,6 +142,7 @@ const Databases = () => {
           </Button>
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

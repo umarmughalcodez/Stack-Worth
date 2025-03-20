@@ -11,6 +11,7 @@ import DemoCard from "./DemoCard";
 import Guide from "./Guide";
 import Reason from "./Reason";
 import Loader from "./Loader";
+import Assistant from "./Assistant";
 
 const Homepage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -78,6 +79,7 @@ const Homepage = () => {
             <Guide />
             <DemoCard />
             <Reason />
+            <Assistant />
           </div>
         </div>
       )}

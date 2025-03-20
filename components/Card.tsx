@@ -28,10 +28,20 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
   const fetchUser = async () => {
     const session = await getSession();
     setUser(session?.user as User);
-    const fetchedUsername = await githubUsername(
-      session?.user?.email as string
-    );
-    setGitHubUsername(fetchedUsername as string);
+    if (!session?.user?.email) return;
+    try {
+      const fetchedUsername = await githubUsername(
+        session?.user?.email as string
+      );
+      if (fetchedUsername) {
+        setGitHubUsername((fetchedUsername as string) ?? null);
+      } else {
+        setGitHubUsername(null);
+      }
+    } catch (error) {
+      console.log("Error Fetching Username", error);
+      setGitHubUsername(null);
+    }
   };
 
   useEffect(() => {
@@ -71,7 +81,7 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
   return (
     <div
       ref={cardRef}
-      className="card w-[50%] h-auto rounded-xl border border-black flex flex-col items-center justify-center p-5 hover:buttons-visible"
+      className="card rounded-xl border border-black flex flex-col items-center justify-center p-5 hover:buttons-visible"
     >
       {user?.image && (
         <Image
@@ -82,13 +92,21 @@ const Card: React.FC<CardProps> = ({ worthMsg, worth, tip, icon }) => {
           className="rounded-full"
         />
       )}
-      <span className="mt-5 mb-3 text-lg">
-        <span className="text-green-500 mr-2 font-semibold">
+
+      {gitHubUsername ? (
+        <span className="mt-5 mb-3 text-lg">
+          <span className="text-green-500 mr-2 font-semibold text-lg">
+            Congratulations!
+          </span>
+          @{gitHubUsername}
+        </span>
+      ) : (
+        <span className="text-green-500 mr-2 font-semibold text-lg">
           Congratulations!
         </span>
-        @{gitHubUsername}
-      </span>
-      <p className="text-lg m-3 flex items-center justify-center break-words">
+      )}
+
+      <p className="text-lg m-3 flex items-center justify-center break-words w-[80%]">
         Your Estimated Developer Worth is{" "}
         <span className="text-green-500 font-semibold ml-2 mr-1">
           ${worth.toLocaleString()}

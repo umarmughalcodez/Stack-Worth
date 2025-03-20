@@ -16,6 +16,7 @@ import rust from "@/public/rust.svg";
 import CustomCheckbox from "@/components/CustomCheckbox";
 import Loader from "@/components/Loader";
 import { ArrowRightIcon } from "lucide-react";
+import Assistant from "@/components/Assistant";
 
 const options = [
   { value: "python", label: "Python", icon: python, bg: "bg-yellow-200" },
@@ -62,7 +63,7 @@ const BackEnd = () => {
         <Loader />
       ) : (
         <div className="w-[95%] h-full z-10 relative grid place-items-center mt-20">
-          <p className="font-bold text-2xl mb-10">
+          <p className="font-bold text-2xl mb-10 w-[85%] text-center">
             Select Your Back End Languages
           </p>
           <CustomCheckbox
@@ -82,6 +83,7 @@ const BackEnd = () => {
               ? "Please select at least 1 language"
               : "Next"}
           </Button>
+          <Assistant />
         </div>
       )}
     </div>

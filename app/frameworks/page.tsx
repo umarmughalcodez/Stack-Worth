@@ -33,6 +33,7 @@ import flutter from "@/public/flutter.svg";
 import CustomCheckbox from "@/components/CustomCheckbox";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
+import Assistant from "@/components/Assistant";
 
 const frontEndOptions = [
   { value: "reactjs", label: "React", icon: react, bg: "bg-blue-200" },
@@ -285,6 +286,7 @@ const Frameworks = () => {
           </Button>
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

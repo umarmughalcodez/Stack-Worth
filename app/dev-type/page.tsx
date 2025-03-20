@@ -9,6 +9,7 @@ import server from "@/public/computer-computers-servers-electronics-technology.s
 import globe from "@/public/globe-with-meridians.svg";
 import Image from "next/image";
 import Loader from "@/components/Loader";
+import Assistant from "@/components/Assistant";
 
 const options = [
   {
@@ -103,7 +104,7 @@ const DeveloperType = () => {
         <Loader />
       ) : (
         <div className="flex flex-col items-center z-10 h-full w-full justify-center relative">
-          <p className="text-2xl font-bold mt-36 mb-16">
+          <p className="text-2xl font-bold mt-36 mb-16 w-[85%] text-center">
             What Type Of Developer Are You?
           </p>
           <div className="flex gap-10 mb-10 flex-wrap items-center justify-center">
@@ -135,7 +136,7 @@ const DeveloperType = () => {
             ))}
           </div>
           {showFullStackMsg && (
-            <p className="text-lg m-3">
+            <p className="text-lg m-3 w-[85%] text-center">
               Looks Like you are a Full Stack Developer!
             </p>
           )}
@@ -156,6 +157,7 @@ const DeveloperType = () => {
           )}
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

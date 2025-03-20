@@ -410,6 +410,7 @@
   padding: 2em;
   width: auto;
   height: auto;
+  margin: 8px 24px;
 
   /* background-color: rgba(255, 255, 255, 0.5); */
   background-color: #ffffff;
@@ -429,24 +430,15 @@
 .card::before {
   content: "";
   position: absolute;
-  height: 102%;
-  width: 102%;
+  height: 103%;
+  width: 103%;
 
-  /* background: conic-gradient(
-    from var(--angle),
-    transparent 0deg,
-    transparent 120deg,
-    green 140deg,
-    green 220deg,
-    transparent 240deg,
-    transparent 360deg
-  ); */
   background-image: conic-gradient(
     from var(--angle),
     transparent,
-    transparent /* lightgreen, */ /* /* green, */,
-
-    /* lightgreen, */ #4ade80
+    transparent,
+    lightgreen,
+    #4ade80
   );
 
   top: 60%;

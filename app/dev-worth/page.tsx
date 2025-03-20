@@ -63,6 +63,7 @@ import suitcase from "@/public/icons8-orange-suitcase-with-stickers-94.png";
 import programming from "@/public/programming.png";
 import programmer from "@/public/app-development.png";
 import developer from "@/public/icons8-developer-94.png";
+import Assistant from "@/components/Assistant";
 
 interface OptionProps {
   value: string;
@@ -267,128 +268,37 @@ const DevWorth = () => {
     }
   }, [languageOptions, databaseOptions, frameworkOptions]);
 
-  const calculateWorth = () => {
+  const calculateWorth = async () => {
     setLoading(true);
-    setTimeout(() => {
-      let totalWorth = 0;
 
-      // Average salaries for programming languages (in USD)
-      const languageSalaries: Record<string, number> = {
-        html: 60000,
-        css: 65000,
-        python: 112382, // :contentReference[oaicite:0]{index=0}
-        js: 120000,
-        java: 120000,
-        c: 125000,
-        ruby: 130000,
-        php: 71000,
-        "c#": 112000,
-        "c++": 128849, // :contentReference[oaicite:1]{index=1}
-        go: 115000,
-        rust: 130000,
-        ts: 131956, // :contentReference[oaicite:2]{index=2}
-        nodejs: 130000,
-      };
+    const language = languages.map((l) => l.value).join(", ");
+    const framework = frameworks.map((f) => f.value).join(", ");
+    const database = databases.map((d) => d.value).join(", ");
 
-      // Average salaries for frameworks (in USD)
-      const frameworkSalaries: Record<string, number> = {
-        reactjs: 120000,
-        angular: 114000,
-        vue: 110000,
-        django: 120000,
-        flask: 115000,
-        springboot: 118000,
-        rubyonrails: 130000,
-        laravel: 105000,
-        net: 112000,
-        express: 115000,
-        nextjs: 125000,
-        svelte: 110000,
-        qt: 100000,
-        unity: 130000,
-        unreal: 112000,
-        libuv: 110000,
-        quarkus: 90000,
-        rocket: 100000,
-        sinatra: 105000,
-        gin: 120000,
-        fiber: 125000,
-        bootstrap: 100000,
-        tailwindcss: 110000,
-        reactNative: 150000,
-        none: 1000,
-      };
-
-      // Average salaries for databases (in USD)
-      const databaseSalaries: Record<string, number> = {
-        mysql: 120000,
-        postgresql: 125000,
-        sqlite: 100000,
-        mongodb: 120000,
-        microsoftsql: 90000,
-        oracle: 100000,
-        redis: 100000,
-        mariadb: 85000,
-        firebase: 130000,
-        aws: 145000,
-      };
-
-      // Experience multipliers
-      const experienceMultipliers: Record<string, number> = {
-        "0 - 1": 0.8,
-        "2 - 3": 1.0,
-        "4 - 6": 1.2,
-        "7 - 9": 1.4,
-        "10+": 1.6,
-      };
-
-      // Development type multipliers
-      const devTypeMultipliers: Record<string, number> = {
-        "front-end": 1.0,
-        "back-end": 1.1,
-        "full-stack": 1.2,
-      };
-
-      // Calculate total worth based on languages
-      languages.forEach((lang) => {
-        if (languageSalaries[lang.value]) {
-          totalWorth += languageSalaries[lang.value];
-        }
+    try {
+      const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: `Only return a number with no additional text. Predict the annual salary (in USD) for a ${dev} developer with ${exp} years of experience, skilled in ${language}, frameworks: ${framework}, and database: ${database}. Example response: 120000`,
+        }),
       });
-
-      // Calculate total worth based on frameworks
-      frameworks.forEach((framework) => {
-        if (frameworkSalaries[framework.value]) {
-          totalWorth += frameworkSalaries[framework.value];
-        }
-      });
-
-      // Calculate total worth based on databases
-      databases.forEach((database) => {
-        if (databaseSalaries[database.value]) {
-          totalWorth += databaseSalaries[database.value];
-        }
-      });
-
-      // Apply experience multiplier
-      const experienceMultiplier = experienceMultipliers[exp] || 1.0;
-      totalWorth *= experienceMultiplier;
-
-      // Apply development type multiplier
-      const devTypeMultiplier = devTypeMultipliers[dev] || 1.0;
-      totalWorth *= devTypeMultiplier;
-
-      // Average the total worth based on the number of skills
-      const totalSkills =
-        languages.length + frameworks.length + databases.length;
-      if (totalSkills > 0) {
-        totalWorth /= totalSkills;
-      }
-
-      setWorth(totalWorth);
+      const data = await res.json();
+      const salaryPrediction =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Salary prediction not available";
+      console.log(salaryPrediction);
+      setWorth(salaryPrediction);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setWorth(0);
+    } finally {
       setShowCard(true);
       setLoading(false);
-    }, 3000);
+    }
   };
 
   useEffect(() => {
@@ -406,7 +316,7 @@ const DevWorth = () => {
   };
 
   const handleEditLanguages = () => {
-    redirect(`/languages?dev=${dev}`);
+    redirect(`/${dev}`);
   };
 
   const handleEditDatabases = () => {
@@ -611,22 +521,26 @@ const DevWorth = () => {
                   </button>
                 </span>
                 <div className="gap-10 flex flex-wrap items-center justify-center mt-10 mb-10">
-                  {databases.map((database) => (
-                    <label
-                      key={database.value}
-                      className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg cursor-pointer transition-all delay-150 w-44 border-none ${database.bg} backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-lg`}
-                    >
-                      {database.icon && (
-                        <Image
-                          src={database.icon}
-                          alt={database.label}
-                          width={database.size ? parseInt(database.size) : 50}
-                          height={50}
-                        />
-                      )}
-                      <span className="text-sm mt-3 ">{database.label}</span>
-                    </label>
-                  ))}
+                  {databases.length === 0 ? (
+                    <span className="text-xl">None</span>
+                  ) : (
+                    databases.map((database) => (
+                      <label
+                        key={database.value}
+                        className={`flex flex-col text-center items-center justify-center gap-1 h-40 border rounded-lg cursor-pointer transition-all delay-150 w-44 border-none ${database.bg} backdrop-blur-sm bg-opacity-60 shadow-[#444] shadow-lg`}
+                      >
+                        {database.icon && (
+                          <Image
+                            src={database.icon}
+                            alt={database.label}
+                            width={database.size ? parseInt(database.size) : 50}
+                            height={50}
+                          />
+                        )}
+                        <span className="text-sm mt-3 ">{database.label}</span>
+                      </label>
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -641,6 +555,7 @@ const DevWorth = () => {
           )}
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

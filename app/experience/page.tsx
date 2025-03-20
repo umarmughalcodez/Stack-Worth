@@ -11,6 +11,7 @@ import expert from "@/public/cold-face.svg";
 import master from "@/public/skull.svg";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
+import Assistant from "@/components/Assistant";
 
 const Experience = () => {
   const [selectedExp, setSelectedExp] = useState<string>("");
@@ -241,6 +242,7 @@ const Experience = () => {
           </Button>
         </div>
       )}
+      <Assistant />
     </div>
   );
 };

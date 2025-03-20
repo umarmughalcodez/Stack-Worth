@@ -4,10 +4,14 @@ import { Button } from "./ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { User } from "@/types/User";
-import { getSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 const Reason = () => {
   const [user, setUser] = useState<User | null>(null);
+
+  const connectGithub = async () => {
+    await signIn("github", { redirectTo: "/" });
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -70,9 +74,7 @@ const Reason = () => {
           effect={"expandIcon"}
           icon={ArrowRightIcon}
           iconPlacement="right"
-          onClick={() => {
-            redirect("/dev-type");
-          }}
+          onClick={connectGithub}
         >
           Connect GitHub First!
         </Button>

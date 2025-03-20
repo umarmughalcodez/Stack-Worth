@@ -10,6 +10,7 @@ import js from "@/public/icons8-javascript.svg";
 import ts from "@/public/icons8-typescript.svg";
 import { ArrowRightIcon } from "lucide-react";
 import Loader from "@/components/Loader";
+import Assistant from "@/components/Assistant";
 
 const options = [
   { value: "html", label: "HTML", icon: html, bg: "bg-red-200" },
@@ -55,7 +56,7 @@ const FrontEnd = () => {
         <Loader />
       ) : (
         <div className="relative z-10 flex flex-col items-center w-full h-full mt-24 overflow-hidden">
-          <p className="font-bold text-2xl mb-20">
+          <p className="font-bold text-2xl mb-20 w-[85%] text-center">
             Select Your Front End Languages
           </p>
           <GroupSizeSelector
@@ -78,6 +79,7 @@ const FrontEnd = () => {
           </Button>
         </div>
       )}
+      <Assistant />
     </div>
   );
 };
