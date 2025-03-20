@@ -5,6 +5,10 @@ import React from "react";
 import money1 from "@/public/money-with-wings.svg";
 import programmer from "@/public/programmer (1).png";
 import demo from "@/public/smiling-face-with-sunglasses.svg";
+import { Button } from "./ui/button";
+import { FaImage } from "react-icons/fa";
+import { SiWhatsapp } from "react-icons/si";
+import { FaXTwitter } from "react-icons/fa6";
 
 const DemoCard = () => {
   return (
@@ -64,6 +68,34 @@ const DemoCard = () => {
             <span className="text-green-500 font-semibold">Pro Tip:</span>{" "}
             <span>Mentor junior developers and share your knowledge</span>
           </p>
+          <div className="mt-4 flex space-x-4">
+            <Button
+              effect={"shineHover"}
+              className="bg-red-500 hover:bg-opacity-80 text-white px-4 py-2 rounded flex items-center justify-center  hover:scale-105 transition-all delay-75"
+            >
+              Save as{" "}
+              <span>
+                <FaImage />
+              </span>
+            </Button>
+            <Button
+              effect={"shineHover"}
+              className="bg-green-500 text-white rounded hover:bg-opacity-80 flex items-center justify-center  hover:scale-105 transition-all delay-75"
+            >
+              Share on {/* <span> */}
+              <SiWhatsapp />
+              {/* </span> */}
+            </Button>
+            <Button
+              effect={"shineHover"}
+              className="bg-[#222] text-white px-4 py-2 rounded hover:bg-opacity-80 flex items-center justify-center hover:scale-105 transition-all delay-75"
+            >
+              Share on
+              <span>
+                <FaXTwitter />
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
