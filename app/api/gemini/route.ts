@@ -18,9 +18,8 @@ export async function POST(req: Request) {
     const data = await geminiRes.json();
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch response from Google Gemini" },
-      { status: 500 }
-    );
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error?.message }, { status: 500 });
+    }
   }
 }
