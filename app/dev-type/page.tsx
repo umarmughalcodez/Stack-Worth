@@ -9,6 +9,7 @@ import globe from "@/public/globe-with-meridians.svg";
 import Image from "next/image";
 import Loader from "@/components/Loader";
 import Assistant from "@/components/Assistant";
+import Background from "@/components/animations/background";
 
 const options = [
   {
@@ -98,7 +99,7 @@ const DeveloperType = () => {
 
   return (
     <div>
-      {/* <Background /> */}
+      <Background />
       {loading ? (
         <Loader />
       ) : (
