@@ -133,6 +133,8 @@ const FullStack = () => {
         <Loader />
       ) : (
         <div className="h-full w-full flex flex-col items-center z-10 relative mt-24">
+          <Assistant />
+
           <Toaster />
           <div className=" w-[95%] h-auto flex">
             <div className="w-[50%] h-full  flex flex-col items-center justify-center">
@@ -171,7 +173,7 @@ const FullStack = () => {
           </Button>
         </div>
       )}
-      <Assistant />
+      {/* <Assistant /> */}
     </div>
   );
 };

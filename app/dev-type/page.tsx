@@ -1,5 +1,4 @@
 "use client";
-import Background from "@/components/animations/background";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -99,11 +98,12 @@ const DeveloperType = () => {
 
   return (
     <div>
-      <Background />
+      {/* <Background /> */}
       {loading ? (
         <Loader />
       ) : (
         <div className="flex flex-col items-center z-10 h-full w-full justify-center relative">
+          <Assistant />
           <p className="text-2xl font-bold mt-36 mb-16 w-[85%] text-center">
             What Type Of Developer Are You?
           </p>
@@ -157,7 +157,6 @@ const DeveloperType = () => {
           )}
         </div>
       )}
-      <Assistant />
     </div>
   );
 };

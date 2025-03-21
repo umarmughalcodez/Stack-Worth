@@ -372,8 +372,12 @@ const DevWorth = () => {
         <Loader />
       ) : (
         <div className="h-full w-[90%] z-10 flex flex-col items-center justify-center relative mt-20 text-center">
+          <Assistant />
+
           {showCard ? (
             <div>
+              <Assistant />
+
               <Card
                 worthMsg={worthMessage}
                 worth={worth}
@@ -555,7 +559,6 @@ const DevWorth = () => {
           )}
         </div>
       )}
-      <Assistant />
     </div>
   );
 };

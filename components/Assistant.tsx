@@ -8,7 +8,7 @@ const Assistant = () => {
 
   return (
     <div
-      className="fixed bottom-6 sm:bottom-10 right-6 sm:right-10 flex items-center gap-2"
+      className="fixed bottom-6 sm:bottom-10 right-6 sm:right-10 flex items-center gap-2 z-[9999]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

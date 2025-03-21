@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "lucide-react";
 import Background from "./animations/background";
 import LiveScrollCards from "./LiveScrollCards";
-import DemoCard from "./DemoCard";
+import Democard from "./DemoCard";
 import Guide from "./Guide";
 import Reason from "./Reason";
 import Loader from "./Loader";
@@ -66,7 +66,7 @@ const Homepage = () => {
               </Button>
             ) : (
               <>
-                <p className="text-lg font-normal">
+                <p className="text-lg font-normal text-center w-[95%]">
                   Please connect your GitHub account first!
                 </p>
               </>
@@ -77,7 +77,7 @@ const Homepage = () => {
             </span>
             <LiveScrollCards />
             <Guide />
-            <DemoCard />
+            <Democard />
             <Reason />
             <Assistant />
           </div>

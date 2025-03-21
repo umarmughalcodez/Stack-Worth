@@ -49,24 +49,21 @@ export default function ChatPage() {
         <p className="mb-16 sm:mb-10">Ask the AI your question</p>
         <form
           onSubmit={handleSubmit}
-          className="mb-4 w-[50%] flex items-center justify-center mt-6 sm:mt-12"
+          className="mb-4 w-[100%] flex items-center justify-center mt-6 sm:mt-12"
         >
           <input
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            className="rounded-2xl border text-black font-semibold border-[#555] bg-white opacity-50 backdrop-blur-3xl outline-none px-3 py-2 w-[80%]"
+            className="rounded-2xl border text-black font-semibold border-[#555] bg-white opacity-50 backdrop-blur-3xl outline-none px-3 py-2 w-[60%]"
             placeholder="Ask something..."
           />
           <Button
-            className="bg-green-500 hover:bg-green-400 rounded-2xl ml-2 px-3"
+            className="bg-green-500 hover:bg-green-400 rounded-2xl ml-2 px-2"
             type="submit"
-            effect={"expandIcon"}
-            icon={IoMdSend}
-            iconPlacement="right"
-            size={"lg"}
           >
             Send
+            <IoMdSend />
           </Button>
         </form>
 

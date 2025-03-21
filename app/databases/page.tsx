@@ -120,6 +120,8 @@ const Databases = () => {
         <Loader />
       ) : (
         <div className="h-full w-[90%] flex flex-col items-center justify-center z-10 relative mt-24">
+          <Assistant />
+
           <p className="mt-4 font-semibold text-2xl mb-10">
             Select Your Databases
           </p>
@@ -142,7 +144,6 @@ const Databases = () => {
           </Button>
         </div>
       )}
-      <Assistant />
     </div>
   );
 };

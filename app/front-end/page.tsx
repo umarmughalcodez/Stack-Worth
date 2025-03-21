@@ -56,6 +56,8 @@ const FrontEnd = () => {
         <Loader />
       ) : (
         <div className="relative z-10 flex flex-col items-center w-full h-full mt-24 overflow-hidden">
+          <Assistant />
+
           <p className="font-bold text-2xl mb-20 w-[85%] text-center">
             Select Your Front End Languages
           </p>
@@ -79,7 +81,6 @@ const FrontEnd = () => {
           </Button>
         </div>
       )}
-      <Assistant />
     </div>
   );
 };

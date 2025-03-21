@@ -407,10 +407,11 @@
 .card {
   color: #222;
   /* margin: 0 auto; */
-  padding: 2em;
+  padding: 1em;
+  /* padding: 20px 12px; */
   width: auto;
   height: auto;
-  margin: 8px 24px;
+  margin: 4px 4px;
 
   /* background-color: rgba(255, 255, 255, 0.5); */
   background-color: #ffffff;
@@ -575,4 +576,28 @@ p {
 .card:hover .buttons-hidden {
   opacity: 1;
   visibility: visible;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  animation: shine 4s infinite linear;
 }
