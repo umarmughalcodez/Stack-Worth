@@ -26,7 +26,8 @@ const DemoCard = () => {
             className="rounded-full"
           />
           <span className="mt-5 mb-3 text-green-500 font-semibold">
-            Congratulations! <span className="font-normal">@johndoe</span>
+            Congratulations!{" "}
+            <span className="font-normal text-black">@johndoe</span>
           </span>
           <p className="text-lg flex-row font-normal items-center justify-center">
             <span>Your Estimated Developer Worth is</span>

@@ -282,7 +282,7 @@ const DevWorth = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: `Only return a number with no additional text. Predict the annual salary (in USD) for a ${dev} developer with ${exp} years of experience, skilled in ${language}, frameworks: ${framework}, and database: ${database}. Example response: 120000`,
+          prompt: `Only return a number with no additional text. Predict the annual salary (in USD) for a ${dev} developer with ${exp} years of experience, skilled in ${language}, frameworks: ${framework}, and database: ${database}. Example response: 120,000`,
         }),
       });
       const data = await res.json();
