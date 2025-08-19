@@ -24,7 +24,7 @@ export default function ChatPage() {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.PUBLIC_API_KEY}`,
+          Authorization: `Bearer ${process.env.API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
