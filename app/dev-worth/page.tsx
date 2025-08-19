@@ -64,6 +64,7 @@ import programming from "@/public/programming.png";
 import programmer from "@/public/app-development.png";
 import developer from "@/public/icons8-developer-94.png";
 import Assistant from "@/components/Assistant";
+import toast from "react-hot-toast";
 
 interface OptionProps {
   value: string;
@@ -276,25 +277,49 @@ const DevWorth = () => {
     const database = databases.map((d) => d.value).join(", ");
 
     try {
-      const res = await fetch("/api/gemini", {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: `Only return a number with no additional text. Predict the annual salary (in USD) for a ${dev} developer with ${exp} years of experience, skilled in ${language}, frameworks: ${framework}, and database: ${database}. Example response: 120,000`,
+          model: "deepseek/deepseek-r1-0528:free",
+          messages: [
+            {
+              role: "user",
+              content: `Only return a number with no additional text. Predict the annual salary (in USD) for a ${dev} developer with ${exp} years of experience, skilled in ${language}, frameworks: ${framework}, and database: ${database}. Example response: 120,000`,
+            },
+          ],
         }),
       });
+
+      if (!res.ok) {
+        if (res.status === 429) {
+          toast.error(
+            "You are sending too many requests. Wait a few seconds..."
+          );
+        } else {
+          toast.error("Something went wrong. Try again.");
+        }
+        return;
+      }
+
       const data = await res.json();
+
+      // Handle both OpenRouter and Gemini-style responses
       const salaryPrediction =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        data?.choices?.[0]?.message?.content?.trim() ||
+        data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ||
         "Salary prediction not available";
-      console.log(salaryPrediction);
+
       setWorth(salaryPrediction);
-      setLoading(false);
     } catch (error) {
-      console.error(error);
-      setWorth(0);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Unexpected error occurred");
+      }
     } finally {
       setShowCard(true);
       setLoading(false);
